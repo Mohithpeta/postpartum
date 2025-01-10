@@ -1,7 +1,11 @@
-import React from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Header } from '../components/Header';
 import { Sidebar } from '../components/Sidebar';
 
 export function Live() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchRef = useRef<HTMLInputElement>(null);
+
   const liveSession = {
     title: "Understanding Pregnancy Health",
     doctor: "Dr. Sarah Johnson",
@@ -24,51 +28,78 @@ export function Live() {
     }
   ];
 
+  const filteredLiveSession = searchQuery
+    ? liveSession.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      liveSession.doctor.toLowerCase().includes(searchQuery.toLowerCase())
+      ? [liveSession]
+      : []
+    : [liveSession];
+
+  const filteredUpcomingSessions = searchQuery
+    ? upcomingSessions.filter((session) => {
+        return (
+          session.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          session.doctor.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      })
+    : upcomingSessions;
+
+  useEffect(() => {
+      searchRef.current?.focus();
+
+    
+  }, []);
+
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
-      <main className="flex-1 p-8 overflow-y-auto">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl font-semibold mb-8">Ongoing Live Sessions</h1>
+      <main className="flex-1 px-6 py-12 overflow-y-auto">
+        <Header 
+          onSearch={(query) => setSearchQuery(query)}
+        />
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-xl font-semibold mb-8">Ongoing Live Sessions</h1>
           
           {/* Current Live Session */}
-          <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-            <div className="flex items-center space-x-4">
-              <img
-                src={liveSession.image}
-                alt={liveSession.doctor}
-                className="w-16 h-16 rounded-full object-cover"
-              />
-              <div>
-                <h3 className="font-semibold">{liveSession.title}</h3>
-                <p className="text-sm text-gray-600">{liveSession.doctor} • {liveSession.time}</p>
+          {filteredLiveSession.map((session, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-sm p-6 mb-8">
+              <div className="flex items-center space-x-4">
+                <img
+                  src={session.image}
+                  alt={session.doctor}
+                  className="w-16 h-16 rounded-full object-cover"
+                />
+                <div>
+                  <h3 className="font-semibold">{session.title}</h3>
+                  <p className="text-sm text-gray-600">{session.doctor} • {session.time}</p>
+                </div>
+                <button className="ml-auto px-6 py-2 bg-[#E91E63] text-white rounded-md hover:bg-[#D81B60]">
+                  Join Now
+                </button>
               </div>
-              <button className="ml-auto px-6 py-2 bg-[#E91E63] text-white rounded-md hover:bg-[#D81B60]">
-                Join Now
-              </button>
             </div>
-          </div>
+          ))}
 
           {/* Upcoming Sessions */}
           <h2 className="text-xl font-semibold mb-4">Upcoming Live Sessions</h2>
           <div className="space-y-4">
-            {upcomingSessions.map((session, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-sm p-4">
-                <div className="flex items-center space-x-4">
-                  <img
-                    src={session.image}
-                    alt={session.doctor}
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
-                  <div>
-                    <h3 className="font-medium">{session.title}</h3>
-                    <p className="text-sm text-gray-600">{session.doctor} • {session.time}</p>
+            {filteredUpcomingSessions.map((session, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-sm p-4">
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src={session.image}
+                      alt={session.doctor}
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                    <div>
+                      <h3 className="font-medium">{session.title}</h3>
+                      <p className="text-sm text-gray-600">{session.doctor} • {session.time}</p>
+                    </div>
+                    <button className="ml-auto px-4 py-2 text-[#E91E63] font-medium">
+                      Set Reminder
+                    </button>
                   </div>
-                  <button className="ml-auto px-4 py-2 text-[#E91E63] font-medium">
-                    Set Reminder
-                  </button>
                 </div>
-              </div>
             ))}
           </div>
         </div>

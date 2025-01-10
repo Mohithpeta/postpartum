@@ -1,0 +1,133 @@
+import { useState} from 'react';
+import { Search, Mic, Bell, ChevronDown} from 'lucide-react';
+
+interface HeaderProps {
+  placeholder?: string;
+  onSearch?: (query: string) => void;
+}
+
+export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderProps) {
+  const [showTopicDropdown, setShowTopicDropdown] = useState(false);
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+
+  const topics = ['Preconception', 'Pregnancy', 'Postpartum', 'Parenting'];
+  const languages = ['English', 'Spanish', 'French', 'German'];
+  const notifications = [
+    { id: 1, title: 'New live session starting', time: '5 minutes ago' },
+    { id: 2, title: 'Dr. Sarah posted new content', time: '1 hour ago' },
+    { id: 3, title: 'Your appointment reminder', time: '2 hours ago' },
+  ];
+
+
+  const handleMicClick = () => {
+    setIsRecording(!isRecording);
+    // Add voice recognition logic here
+  };
+
+  return (
+    <div className="w-full bg-white border-b border-gray-200 relative z-50">
+      <div className="max-w-7xl mx-auto px-4 py-3">
+        <div className="flex items-center justify-between gap-4">
+          {/* Search Bar with Mic */}
+          <div className="flex-1 max-w-2xl relative flex items-center">
+            <div className="relative flex-1">
+              <input
+                type="text"
+                onChange={(e) => onSearch?.(e.target.value)}
+                placeholder={placeholder}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#E91E63] focus:border-transparent"
+              />
+              <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
+            <button 
+              onClick={handleMicClick}
+              className={`p-2 border-y border-r border-gray-300 rounded-r-md hover:bg-gray-50 transition-colors ${
+                isRecording ? 'bg-pink-50 text-[#E91E63]' : ''
+              }`}
+            >
+              <Mic className={`w-5 h-5 ${isRecording ? 'text-[#E91E63] animate-pulse' : 'text-gray-500'}`} />
+            </button>
+          </div>
+
+          {/* Right Side Elements */}
+          <div className="flex items-center gap-4">
+            {/* Notification Bell */}
+            <div className="relative">
+              <button 
+                onClick={() => setShowNotifications(!showNotifications)}
+                className="p-2 hover:bg-gray-100 rounded-full relative transition-transform hover:scale-105"
+              >
+                <Bell className="w-5 h-5 text-gray-600" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-[#E91E63] rounded-full animate-pulse"></span>
+              </button>
+
+              {/* Notifications Dropdown */}
+              {showNotifications && (
+                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
+                  {notifications.map((notification) => (
+                    <div key={notification.id} className="px-4 py-3 hover:bg-gray-50 cursor-pointer">
+                      <p className="text-sm font-medium text-gray-800">{notification.title}</p>
+                      <p className="text-xs text-gray-500">{notification.time}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Topic Selection */}
+            <div className="relative">
+              <button 
+                onClick={() => setShowTopicDropdown(!showTopicDropdown)}
+                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+              >
+                <span>Preconception</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${showTopicDropdown ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Topics Dropdown */}
+              {showTopicDropdown && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
+                  {topics.map((topic) => (
+                    <button
+                      key={topic}
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    >
+                      {topic}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Language Selection */}
+            <div className="relative">
+              <button 
+                onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+              >
+                <span>English</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${showLanguageDropdown ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Languages Dropdown */}
+              {showLanguageDropdown && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
+                  {languages.map((language) => (
+                    <button
+                      key={language}
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    >
+                      {language}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

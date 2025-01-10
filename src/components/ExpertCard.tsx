@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ExpertCardProps {
   name: string;
   title: string;
