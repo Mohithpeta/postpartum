@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { LifeCourseExperts } from './pages/LifeCourseExperts';
@@ -8,6 +7,7 @@ import { Community } from './pages/Community';
 import { Profile } from './pages/Profile';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import { DoctorProfile } from './pages/DoctorProfile';
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile/:id" element={<DoctorProfile />} />
       </Routes>
     </BrowserRouter>
   );

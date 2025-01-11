@@ -1,7 +1,7 @@
-import  { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Sidebar } from '../components/Sidebar';
 import { Header } from '../components/Header';
-import {  Star } from 'lucide-react';
+import {Link} from 'react-router-dom';
 
 export function LifeCourseExperts() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,51 +12,49 @@ export function LifeCourseExperts() {
   const experts = [
     {
       name: "Dr. Sarah Johnson",
+      id: 1, 
       specialization: "OBGYN",
-      rating: 4.9,
       image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=400"
     },
     {
       name: "Dr. Michael Chen",
+      id: 2,
       specialization: "Pediatrician",
-      rating: 4.8,
       image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400"
     },
     {
       name: "Dr. Lisa Williams",
+      id: 3,
       specialization: "Family Medicine",
-      rating: 4.9,
       image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400"
     },
     {
       name: "Dr. James Wilson",
+      id: 4,
       specialization: "Cardiologist",
-      rating: 4.7,
       image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400"
     },
     // Duplicate experts to fill the grid
     {
       name: "Dr. Sarah Johnson",
+      id: 5,
       specialization: "OBGYN",
-      rating: 4.9,
       image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=400"
     },
     {
       name: "Dr. Michael Chen",
+      id: 6,
       specialization: "Pediatrician",
-      rating: 4.8,
       image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400"
     },
     {
       name: "Dr. Lisa Williams",
       specialization: "Family Medicine",
-      rating: 4.9,
       image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400"
     },
     {
       name: "Dr. James Wilson",
       specialization: "Cardiologist",
-      rating: 4.7,
       image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400"
     }
   ];
@@ -74,7 +72,7 @@ export function LifeCourseExperts() {
 
       return matchesSearch && matchesFilter;
     });
-  }, [experts, searchQuery]);
+  }, [experts, searchQuery, activeFilter]);
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -114,24 +112,17 @@ export function LifeCourseExperts() {
                   key={index} 
                   className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
                 >
-                  <div className="relative">
-                    <img src={expert.image} alt={expert.name} className="w-full h-48 object-cover" />
-                    <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full flex items-center">
-                      <span className="text-[#A32E76] font-medium mr-1">{expert.rating}</span>
-                      <Star className="w-4 h-4 text-[#A32E76] fill-current" />
-                    </div>
-                  </div>
+                  <img 
+                    src={expert.image} 
+                    alt={expert.name} 
+                    className="w-full h-48 object-cover" 
+                  />
                   <div className="p-4">
                     <h3 className="font-medium text-gray-900">{expert.name}</h3>
                     <p className="text-sm text-gray-600">{expert.specialization}</p>
-                    <div className="mt-3 flex justify-between items-center">
-                      <button className="text-[#A32E76] text-sm font-medium hover:text-[#D81B60]">
-                        View Profile
-                      </button>
-                      <button className="px-3 py-1 bg-[#A32E76] text-white text-sm rounded-full hover:bg-[#D81B60]">
-                        Book Now
-                      </button>
-                    </div>
+                    <button className="mt-3 text-[#A32E76] text-sm font-medium hover:text-[#D81B60]">                     
+                      <Link to={`/profile/${expert.id}`}>View Profile</Link>
+                    </button>
                   </div>
                 </div>
               ))}

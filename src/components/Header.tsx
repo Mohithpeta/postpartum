@@ -1,5 +1,6 @@
-import { useState} from 'react';
-import { Search, Mic, Bell, ChevronDown} from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Search, Mic, Bell, ChevronDown } from 'lucide-react';
+
 
 interface HeaderProps {
   placeholder?: string;
@@ -11,15 +12,43 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState('English');
 
   const topics = ['Preconception', 'Pregnancy', 'Postpartum', 'Parenting'];
-  const languages = ['English', 'Spanish', 'French', 'German'];
+  const languages = ['English', 'Telugu', 'Tamil', 'Hindi'];
   const notifications = [
     { id: 1, title: 'New live session starting', time: '5 minutes ago' },
     { id: 2, title: 'Dr. Sarah posted new content', time: '1 hour ago' },
     { id: 3, title: 'Your appointment reminder', time: '2 hours ago' },
   ];
 
+  const languageDropdownRef = useRef<HTMLDivElement>(null);
+  const notificationDropdownRef = useRef<HTMLDivElement>(null);
+  const topicDropdownRef = useRef<HTMLDivElement>(null);
+
+  const useOutsideClick = (ref: any, callback: () => void) => {
+    useEffect(() => {
+      const handleClickOutside = (event: any) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+          callback();
+        }
+      };
+  
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [ref, callback]);
+  };
+
+  useOutsideClick(languageDropdownRef, () => setShowLanguageDropdown(false));
+  useOutsideClick(notificationDropdownRef, () => setShowNotifications(false));
+  useOutsideClick(topicDropdownRef, () => setShowTopicDropdown(false));
+
+  const handleLanguageChange = (language: string) => {
+    setSelectedLanguage(language);
+    setShowLanguageDropdown(false); 
+  };
 
   const handleMicClick = () => {
     setIsRecording(!isRecording);
@@ -65,7 +94,9 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
 
               {/* Notifications Dropdown */}
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
+                <div 
+                  ref={notificationDropdownRef}
+                  className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
                   {notifications.map((notification) => (
                     <div key={notification.id} className="px-4 py-3 hover:bg-gray-50 cursor-pointer">
                       <p className="text-sm font-medium text-gray-800">{notification.title}</p>
@@ -88,7 +119,9 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
 
               {/* Topics Dropdown */}
               {showTopicDropdown && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
+                <div 
+                  ref={topicDropdownRef}
+                  className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
                   {topics.map((topic) => (
                     <button
                       key={topic}
@@ -107,17 +140,20 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
                 onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
                 className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
               >
-                <span>English</span>
+                <span>{selectedLanguage}</span>
                 <ChevronDown className={`w-4 h-4 transition-transform ${showLanguageDropdown ? 'rotate-180' : ''}`} />
               </button>
 
               {/* Languages Dropdown */}
               {showLanguageDropdown && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
+                <div 
+                  ref={languageDropdownRef}
+                  className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
                   {languages.map((language) => (
                     <button
                       key={language}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      onClick={() => handleLanguageChange(language)} 
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" 
                     >
                       {language}
                     </button>
