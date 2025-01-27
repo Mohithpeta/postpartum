@@ -8,6 +8,13 @@ import { Profile } from './pages/Profile';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { DoctorProfile } from './pages/DoctorProfile';
+import { Trackers } from './pages/Trackers';
+import { BP } from './pages/Trackers/BP';
+import { Weight } from './pages/Trackers/Weight';
+// import { SpO2 } from './pages/Trackers/SpO2';
+// import { HeartRate } from './pages/Trackers/HeartRate';
+import { BloodGlucose } from './pages/Trackers/BloodGlucose';
+import { Anemia } from './pages/Trackers/Anemia';
 
 function App() {
   return (
@@ -23,6 +30,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile/:id" element={<DoctorProfile />} />
+        <Route path="/trackers" element={<Trackers />} />
+        <Route path="/trackers/bp" element={<BP />} />
+        <Route path="/trackers/weight" element={<Weight />} />
+        {/* <Route path="/trackers/spo2" element={<SpO2 />} />
+        <Route path="/trackers/heart-rate" element={<HeartRate />} /> */}
+        <Route path="/trackers/blood-glucose" element={<BloodGlucose />} />
+        <Route path="/trackers/anemia" element={<Anemia />} />
       </Routes>
     </BrowserRouter>
   );

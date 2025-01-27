@@ -1,8 +1,9 @@
 import { useState, useMemo } from 'react';
 import { Sidebar } from '../components/Sidebar';
-import { X } from 'lucide-react';
+import { X, Users } from 'lucide-react';
 import { Header } from '../components/Header';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -57,6 +58,7 @@ export function Home() {
 
   const experts = [
     {
+      id: 1,
       name: 'Dr. Sarah Johnson',
       specialization: 'OBGYN',
       category: 'Mental Health',
@@ -64,6 +66,7 @@ export function Home() {
         'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=400',
     },
     {
+      id: 2,
       name: 'Dr. Michael Chen',
       specialization: 'Pediatrician',
       category: 'Obesity',
@@ -71,6 +74,7 @@ export function Home() {
         'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400',
     },
     {
+      id: 3,
       name: 'Dr. Lisa Williams',
       specialization: 'Family Medicine',
       category: 'Diabetes Mellitus',
@@ -78,6 +82,7 @@ export function Home() {
         'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400',
     },
     {
+      id: 4,
       name: 'Dr. James Wilson',
       specialization: 'Cardiologist',
       category: 'Anxiety Disorders',
@@ -213,7 +218,13 @@ export function Home() {
                       />
                       <div className="p-4">
                         <h3 className="font-medium text-gray-900">{content.title}</h3>
-                        <p className="text-sm text-gray-600 mt-1">{content.experts}</p>
+                        <Link 
+                          to="/experts" 
+                          className="mt-2 inline-flex items-center gap-2 text-sm text-[#A32E76] hover:text-[#8E2968] transition-colors"
+                        >
+                          <Users className="w-4 h-4" />
+                          {content.experts}
+                        </Link>
                       </div>
                     </motion.div>
                   ))}
@@ -230,22 +241,27 @@ export function Home() {
               >
                 <h2 className="text-xl font-semibold mb-6">LifeCourse experts for you</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {filteredExperts.map((expert, index) => (
-                    <motion.div
-                      key={index}
-                      className="bg-white rounded-lg shadow-sm overflow-hidden"
-                      whileHover={{ scale: 1.05 }}
+                  {filteredExperts.map((expert) => (
+                    <Link 
+                      key={expert.id}
+                      to={`/profile/${expert.id}`}
+                      className="block"
                     >
-                      <img
-                        src={expert.image}
-                        alt={expert.name}
-                        className="w-full h-48 object-cover"
-                      />
-                      <div className="p-4">
-                        <h3 className="font-medium text-gray-900">{expert.name}</h3>
-                        <p className="text-sm text-gray-600">{expert.specialization}</p>
-                      </div>
-                    </motion.div>
+                      <motion.div
+                        className="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer hover:shadow-md transition-shadow"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <img
+                          src={expert.image}
+                          alt={expert.name}
+                          className="w-full h-48 object-cover"
+                        />
+                        <div className="p-4">
+                          <h3 className="font-medium text-gray-900">{expert.name}</h3>
+                          <p className="text-sm text-gray-600">{expert.specialization}</p>
+                        </div>
+                      </motion.div>
+                    </Link>
                   ))}
                 </div>
               </motion.div>

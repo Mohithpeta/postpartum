@@ -53,10 +53,12 @@ export function Live() {
   }, []);
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar />
-      <main className="flex-1 px-6 py-6 overflow-y-auto">
-        <Header onSearch={(query) => setSearchQuery(query)} />
+    <div className="flex h-screen bg-gray-100 relative">
+       <Sidebar />
+       <div className="flex-1 overflow-y-auto">
+       <div className="sticky top-0 z-50 bg-gray-100">
+          <Header onSearch={(query) => setSearchQuery(query)} />
+        </div>
         <div className="max-w-7xl mx-auto">
           {/* <h1 className="text-3xl font-semibold text-gray-900 mb-6">Live Sessions</h1> */}
 
@@ -127,7 +129,8 @@ export function Live() {
             </div>
           </section>
         </div>
-      </main>
+        </div>
+       
     </div>
   );
 }
