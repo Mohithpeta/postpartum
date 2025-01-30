@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Sidebar } from '../components/Sidebar';
 import { ExpertCard } from '../components/ExpertCard';
 import { Search } from 'lucide-react';

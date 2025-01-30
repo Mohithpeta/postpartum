@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, Users, MessageCircle, User, Video, Activity } from 'lucide-react';
+import { Home, Users, MessageCircle, User, Video, Activity,Radio } from 'lucide-react';
 
 interface NavLinkProps {
   icon: React.ReactNode;
@@ -50,7 +50,14 @@ export function Sidebar() {
           isActive={currentPath === '/experts'}
         />
         <NavLink
-          icon={<Video className="w-5 h-5" />}
+        icon={<Video className="w-5 h-5" />}
+        label="Videos"
+        to="/videos"
+        isActive={currentPath === '/videos'}
+        />
+      
+        <NavLink
+          icon={<Radio className="w-5 h-5" />}
           label="Live"
           to="/live"
           isActive={currentPath === '/live'}

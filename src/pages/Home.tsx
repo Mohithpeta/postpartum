@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 export function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false); // Loading state for search
 
   const categories = [
     'All',
@@ -108,6 +109,12 @@ export function Home() {
     setSearchQuery('');
   };
 
+  const handleSearch = (query: string) => {
+    setIsLoading(true);
+    setSearchQuery(query);
+    setTimeout(() => setIsLoading(false), 500); // Simulate search delay
+  };
+
   const filteredContent = useMemo(() => {
     let filtered = personalizedContent;
 
@@ -153,11 +160,13 @@ export function Home() {
     return filtered;
   }, [experts, activeFilters, searchQuery]);
 
+  const totalResults = filteredContent.length + filteredExperts.length;
+
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
       <main className="flex-1 overflow-hidden flex flex-col">
-        <Header placeholder="Search LifeCourse" onSearch={setSearchQuery} />
+        <Header placeholder="Search LifeCourse" onSearch={handleSearch} />
         <div className="flex-1 p-8 overflow-y-auto">
           <div className="max-w-6xl mx-auto">
             {/* Categories Section */}
@@ -167,7 +176,8 @@ export function Home() {
                   <motion.button
                     key={category}
                     onClick={() => toggleFilter(category)}
-                    whileHover={{ scale: 1.1 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
                       (category === 'All' && activeFilters.length === 0) ||
                       activeFilters.includes(category)
@@ -181,7 +191,8 @@ export function Home() {
                 {activeFilters.length > 0 && (
                   <motion.button
                     onClick={clearFilters}
-                    whileHover={{ scale: 1.1 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     className="px-3 py-1.5 rounded-full text-sm bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center"
                   >
                     <X className="w-4 h-4 mr-1" />
@@ -193,9 +204,28 @@ export function Home() {
 
             {/* Results Display */}
             <div className="mb-4 text-sm text-gray-600">
-              Found {filteredContent.length + filteredExperts.length} results
+              {isLoading ? (
+                <span>Searching...</span>
+              ) : (
+                <span>Found {totalResults} results</span>
+              )}
             </div>
 
+            {/* No Results Found */}
+            {!isLoading && totalResults === 0 && (
+              <motion.div
+                className="text-center py-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <h2 className="text-xl font-semibold mb-4">No Results Found</h2>
+                <p className="text-gray-600">
+                  Try adjusting your search or filters.
+                </p>
+              </motion.div>
+            )}
+
+            {/* Personalized Content */}
             {filteredContent.length > 0 && (
               <motion.div
                 className="mb-12"
@@ -218,8 +248,8 @@ export function Home() {
                       />
                       <div className="p-4">
                         <h3 className="font-medium text-gray-900">{content.title}</h3>
-                        <Link 
-                          to="/experts" 
+                        <Link
+                          to="/experts"
                           className="mt-2 inline-flex items-center gap-2 text-sm text-[#A32E76] hover:text-[#8E2968] transition-colors"
                         >
                           <Users className="w-4 h-4" />
@@ -232,6 +262,7 @@ export function Home() {
               </motion.div>
             )}
 
+            {/* Experts Section */}
             {filteredExperts.length > 0 && (
               <motion.div
                 className="mb-8"
@@ -242,7 +273,7 @@ export function Home() {
                 <h2 className="text-xl font-semibold mb-6">LifeCourse experts for you</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {filteredExperts.map((expert) => (
-                    <Link 
+                    <Link
                       key={expert.id}
                       to={`/profile/${expert.id}`}
                       className="block"

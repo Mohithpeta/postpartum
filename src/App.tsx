@@ -15,6 +15,7 @@ import { Weight } from './pages/Trackers/Weight';
 // import { HeartRate } from './pages/Trackers/HeartRate';
 import { BloodGlucose } from './pages/Trackers/BloodGlucose';
 import { Anemia } from './pages/Trackers/Anemia';
+import { VideosPage } from './pages/VideosPage';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/trackers/heart-rate" element={<HeartRate />} /> */}
         <Route path="/trackers/blood-glucose" element={<BloodGlucose />} />
         <Route path="/trackers/anemia" element={<Anemia />} />
+        <Route path="/videos" element={<VideosPage /> } />
       </Routes>
     </BrowserRouter>
   );
