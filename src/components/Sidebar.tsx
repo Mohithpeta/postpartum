@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, Users, MessageCircle, User, Video, Activity,Radio } from 'lucide-react';
+import { Home, Users, MessageCircle, User, Video, Activity,Radio, BookOpen } from 'lucide-react';
 
 interface NavLinkProps {
   icon: React.ReactNode;
@@ -74,6 +74,12 @@ export function Sidebar() {
           to="/trackers"
           isActive={currentPath === '/trackers'}
         />
+        <NavLink
+          icon={<BookOpen className="w-5 h-5" />}
+          label="Courses"
+          to="/courses"
+          isActive={currentPath === '/courses'}
+          />
         <NavLink
           icon={<User className="w-5 h-5" />}
           label="Profile"

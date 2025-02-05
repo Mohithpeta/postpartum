@@ -5,6 +5,7 @@ import { Search, Mic, Bell, ChevronDown } from 'lucide-react';
 interface HeaderProps {
   placeholder?: string;
   onSearch?: (query: string) => void;
+  searchQuery?: string;
 }
 
 export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderProps) {
@@ -26,10 +27,10 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
   const notificationDropdownRef = useRef<HTMLDivElement>(null);
   const topicDropdownRef = useRef<HTMLDivElement>(null);
 
-  const useOutsideClick = (ref: any, callback: () => void) => {
+  const useOutsideClick = (ref: React.RefObject<HTMLDivElement>, callback: () => void) => {
     useEffect(() => {
-      const handleClickOutside = (event: any) => {
-        if (ref.current && !ref.current.contains(event.target)) {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (ref.current && !ref.current.contains(event.target as Node)) {
           callback();
         }
       };

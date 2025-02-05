@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Sidebar } from '../components/Sidebar';
 import { Header } from '../components/Header';
-import {  Activity, Plus, Scale, Droplet, Stethoscope } from 'lucide-react'; //Thermometer,Heart, ( import for spO2)
+import {  Activity, Plus, Scale, Droplet, Stethoscope ,Thermometer,Heart} from 'lucide-react'; //Thermometer,Heart, ( import for spO2)
 import { motion } from 'framer-motion';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 
@@ -45,28 +45,28 @@ export function Trackers() {
       color: 'bg-purple-100 text-purple-600',
       path: '/trackers/weight'
     },
-    // spO2 chart routing
-    // {
-    //   id: 'spo2',
-    //   name: 'SpO2',
-    //   value: '98',
-    //   unit: '%',
-    //   icon: <Thermometer className="w-6 h-6" />,
-    //   lastUpdated: '3 hours ago',
-    //   color: 'bg-blue-100 text-blue-600',
-    //   path: '/trackers/spo2'
-    // },
-    // heartrate chart routing
-    // {
-    //   id: 'heart-rate',
-    //   name: 'Heart Rate',
-    //   value: '72',
-    //   unit: 'bpm',
-    //   icon: <Heart className="w-6 h-6" />,
-    //   lastUpdated: '30 minutes ago',
-    //   color: 'bg-red-100 text-red-600',
-    //   path: '/trackers/heart-rate'
-    // },
+
+    {
+      id: 'spo2',
+      name: 'SpO2',
+      value: '98',
+      unit: '%',
+      icon: <Thermometer className="w-6 h-6" />,
+      lastUpdated: '3 hours ago',
+      color: 'bg-blue-100 text-blue-600',
+      path: '/trackers/spo2'
+    },
+  
+    {
+      id: 'heart-rate',
+      name: 'Heart Rate',
+      value: '72',
+      unit: 'bpm',
+      icon: <Heart className="w-6 h-6" />,
+      lastUpdated: '30 minutes ago',
+      color: 'bg-red-100 text-red-600',
+      path: '/trackers/heart-rate'
+    },
     {
         id: 'blood-glucose',
         name: 'Blood Glucose',

@@ -26,7 +26,7 @@ export function Home() {
     'Pelvic Organ Prolapse',
   ];
 
-  const personalizedContent = [
+  const personalizedContent = useMemo(() => [
     {
       title: 'Mental Health',
       image:
@@ -55,9 +55,9 @@ export function Home() {
       experts: '45 Experts',
       category: 'Anxiety Disorders',
     },
-  ];
+  ], []);
 
-  const experts = [
+  const experts = useMemo(() =>[
     {
       id: 1,
       name: 'Dr. Sarah Johnson',
@@ -90,7 +90,7 @@ export function Home() {
       image:
         'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400',
     },
-  ];
+  ], []);
 
   const toggleFilter = (category: string) => {
     if (category === 'All') {
