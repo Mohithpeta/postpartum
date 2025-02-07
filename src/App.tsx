@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { LifeCourseExperts } from './pages/LifeCourseExperts';
 import { Dashboard } from './pages/Dashboard';
@@ -17,30 +17,47 @@ import { BloodGlucose } from './pages/Trackers/BloodGlucose';
 import { Anemia } from './pages/Trackers/Anemia';
 import { VideosPage } from './pages/VideosPage';
 import CoursesPage from './pages/Courses';
+import AuthGuard from './components/AuthGuard';
+
+function ProtectedRoutes() {
+  return (
+    <AuthGuard>
+      <Outlet />
+    </AuthGuard>
+  );
+}
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" replace />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/experts" element={<LifeCourseExperts />} />
-        <Route path="/live" element={<Live />} />
-        <Route path="/community" element={<Community />} />
-        <Route path="/profile" element={<Profile />} />
+        {/* 🔹 Redirect to Login by default */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile/:id" element={<DoctorProfile />} />
-        <Route path="/trackers" element={<Trackers />} />
-        <Route path="/trackers/bp" element={<BP />} />
-        <Route path="/trackers/weight" element={<Weight />} />
-        <Route path="/trackers/spo2" element={<SpO2 />} />
-        <Route path="/trackers/heart-rate" element={<HeartRate />} />
-        <Route path="/trackers/blood-glucose" element={<BloodGlucose />} />
-        <Route path="/trackers/anemia" element={<Anemia />} />
-        <Route path="/videos" element={<VideosPage /> } />
-        <Route path="/courses" element={<CoursesPage />} />
+
+        {/* 🔹 Protected Routes */}
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/experts" element={<LifeCourseExperts />} />
+          <Route path="/live" element={<Live />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:id" element={<DoctorProfile />} />
+          <Route path="/videos" element={<VideosPage />} />
+          <Route path="/courses" element={<CoursesPage />} />
+
+          {/* 🔹 Health Trackers Section */}
+          <Route path="/trackers" element={<Trackers />}>
+            <Route path="bp" element={<BP />} />
+            <Route path="weight" element={<Weight />} />
+            <Route path="spo2" element={<SpO2 />} />
+            <Route path="heart-rate" element={<HeartRate />} />
+            <Route path="blood-glucose" element={<BloodGlucose />} />
+            <Route path="anemia" element={<Anemia />} />
+          </Route>
+        </Route>
       </Routes>
     </BrowserRouter>
   );

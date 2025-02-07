@@ -5,6 +5,7 @@ import { Input } from '../components/Input';
 import { Button } from '../components/Button';
 import { CheckCircle, Info } from 'lucide-react';
 import { cn } from '../utils/cn';
+import axios from 'axios';
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
@@ -23,8 +24,8 @@ export function Register() {
     password: '',
     name: '',
     phone: '',
-    birthCertificate: null as File | null,
     deliveryStatus: '',
+    role: 'user',
   });
 
   const conditions: Condition[] = [
@@ -35,7 +36,7 @@ export function Register() {
     { name: 'Secondary Infertility', info: 'If you are not able to conceive again after having a child??' },
     { name: 'Pelvic Organ Prolapse', info: 'Heaviness around lower abdomen & genitals, dragging sensation in vagina, bulge/lump protruding outside.' },
     { name: 'Dyspareunia', info: 'Pain during sex, Decreased sex drive, Vaginal dryness.' },
-    { name: 'Obesity', info: ' If your BMI (Body Mass Index) is grater than 30 kg/m2' },
+    { name: 'Obesity', info: ' If your BMI (Body Mass Index) is greater than 30 kg/m2' },
     { name: 'Backpain', info: 'Muscle ache, Pain radiating down a leg, Shooting/Stabbing Sensation.' },
     { name: 'Anal Incontinence', info: 'Involuntary passing of gas/stool, Constipation, Bloating, Hemorrhoids/Piles.' }
   ];
@@ -44,27 +45,31 @@ export function Register() {
     setStep((prev) => (prev < 4 ? (prev + 1) as Step : prev));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (step < 4) {
       handleNext();
     } else {
-      console.log('Submitting:', { ...formData, conditions: selectedConditions });
+      try {
+        const response = await axios.post("http://localhost:8000/auth/signup", formData, {
+          headers: { 'Content-Type': 'application/json' },
+        });
 
-      // Show success message first
-      setStep(5);
-
-      // Redirect to login after 3 seconds
-      setTimeout(() => {
-        navigate('/login');
-      }, 3000);
+        console.log('User signed up:', response.data);
+        setStep(5);
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
+      } catch (error) {
+        console.error('Error during signup:', error);
+      }
     }
   };
-
   const toggleCondition = (conditionName: string) => {
     setSelectedConditions((prev) =>
       prev.includes(conditionName)
-        ? prev.filter((c) => c !== conditionName)
+        ? prev.filter((name) => name !== conditionName)
         : [...prev, conditionName]
     );
   };
@@ -141,30 +146,30 @@ export function Register() {
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     required
                   />
-                    <label className="block">
-                      <span className="text-[#A32E76] font-medium">
-                        Have you delivered a baby in the past 6 months or are you a caretaker?
-                      </span>
-                      <select
-                        value={formData.deliveryStatus}
-                        onChange={(e) => setFormData({ ...formData, deliveryStatus: e.target.value })}
-                        className="mt-2 block w-full rounded-md border border-[#A32E76] bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#A32E76] focus:ring-opacity-50 text-lg py-2 px-2"
-                        required
-                      >
-                        <option value="" disabled>Select an option</option>
-                        <option value="postpartum">Postpartum</option>
-                        <option value="preconception">Preconception</option>
-                        <option value="pregnancy">Pregnancy</option>
-                      </select>
-                    </label>
-
+                  <label className="block">
+                    <span className="text-[#A32E76] font-medium">
+                      Have you delivered a baby in the past 6 months or are you a caretaker?
+                    </span>
+                    <select
+                      value={formData.deliveryStatus}
+                      onChange={(e) => setFormData({ ...formData, deliveryStatus: e.target.value })}
+                      className="mt-2 block w-full rounded-md border border-[#A32E76] bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#A32E76] focus:ring-opacity-50 text-lg py-2 px-2"
+                      required
+                    >
+                      <option value="" disabled>Select an option</option>
+                      <option value="postpartum">Postpartum</option>
+                      <option value="preconception">Preconception</option>
+                      <option value="pregnancy">Pregnancy</option>
+                    </select>
+                  </label>
                 </>
               )}
 
               {step === 3 && (
                 <>
                   <h2 className="text-2xl font-semibold text-center text-[#A32E76] mb-6">Document Upload</h2>
-                  <Input
+                  {/* Commented out the file upload input */}
+                  {/* <Input
                     type="file"
                     accept=".pdf,.jpg,.jpeg,.png"
                     onChange={(e) => {
@@ -172,14 +177,14 @@ export function Register() {
                       setFormData({ ...formData, birthCertificate: file });
                     }}
                     required
-                  />
+                  /> */}
                 </>
               )}
 
               {step === 4 && (
                 <>
                   <p className="text-xl  text-center  mb-6">
-                  Choose from below eleven that why are you Here (This will help us to provide curated healthcare content for you)
+                    Choose from below eleven that why are you here (This will help us to provide curated healthcare content for you)
                   </p>
                   <div className="grid grid-cols-2 gap-4">
                     {conditions.map((condition) => (

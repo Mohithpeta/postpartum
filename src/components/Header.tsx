@@ -6,6 +6,7 @@ interface HeaderProps {
   placeholder?: string;
   onSearch?: (query: string) => void;
   searchQuery?: string;
+  streamedTime?: string;
 }
 
 export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderProps) {

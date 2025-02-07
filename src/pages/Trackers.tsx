@@ -87,6 +87,16 @@ export function Trackers() {
         color: 'bg-red-100 text-red-600',
         path: '/trackers/anemia'
       },
+      // {
+      //   id: 'angle tracker',
+      //   name: 'Angle Tracker',
+      //   value: '25',
+      //   unit: 'deg',
+      //   icon: <Stethoscope className="w-6 h-6" />,
+      //   lastUpdated: '30 minutes ago',
+      //   color: 'bg-red-100 text-red-600',
+      //   path: '/trackers/angle-tracker'
+      // },
   ]);
 
   const containerVariants = {
