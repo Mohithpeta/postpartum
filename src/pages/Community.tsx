@@ -5,7 +5,7 @@ import { X, CheckCircle } from 'lucide-react';
 
 export function Community() {
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedTopic, setSelectedTopic] = useState<string>('All');
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState<boolean>(false);
   const [note, setNote] = useState<string>('');
@@ -13,27 +13,19 @@ export function Community() {
   const [requestedGroups, setRequestedGroups] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const categories: string[] = [
-    'All',
-    'Postpartum Hypertension',
-    'Anal Incontinence',
-    'Obesity',
-    'Diabetes Mellitus',
-    'Dyspareunia',
-  ];
-
   const groups = [
-    { name: "Postpartum Hypertension", members: 156, description: "Join the Postpartum Hypertension Community to connect with experts and peers.", category: "Postpartum Hypertension" },
-    { name: "Hypertension Management 101", members: 243, description: "Discussion group on hypertension management strategies.", category: "Postpartum Hypertension" },
+    { name: "Postpartum Hypertension", members: 156, description: "Join the Postpartum Hypertension Community to connect with experts and peers.", category: "Hypertension" },
+    { name: "Hypertension Management 101", members: 243, description: "Discussion group on hypertension management strategies.", category: "Hypertension" },
     { name: "Exercise and Wellness Postpartum", members: 200, description: "Guidance on exercise and wellness for postpartum recovery.", category: "Obesity" },
-    { name: "Ask the Experts: Hypertension Q&A", members: 237, description: "Ask questions directly to medical professionals regarding hypertension.", category: "Diabetes Mellitus" },
-    { name: "Heart Health for New Moms", members: 103, description: "Community dedicated to heart health for new mothers.", category: "Dyspareunia" }
+    { name: "Ask the Experts: Hypertension Q&A", members: 237, description: "Ask questions directly to medical professionals regarding hypertension.", category: "Hypertension" },
+    { name: "Heart Health for New Moms", members: 103, description: "Community dedicated to heart health for new mothers.", category: "Urinary Incontinence" }
   ];
 
-  const filteredGroups = groups.filter(group => 
-    (selectedCategory === 'All' || group.category === selectedCategory) &&
-    group.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredGroups = groups.filter(group => {
+    const matchesSearch = group.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesTopic = selectedTopic === 'All' || group.category === selectedTopic;
+    return matchesSearch && matchesTopic;
+  });
 
   const handleJoinGroup = (group: { name: string }) => {
     setSelectedGroup(group);
@@ -58,36 +50,36 @@ export function Community() {
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
       <main className="flex-1 flex flex-col overflow-hidden">
-        <Header onSearch={setSearchQuery} />
+        <Header 
+          onSearch={setSearchQuery} 
+          onTopicChange={(topic) => setSelectedTopic(topic)}
+        />
         <div className="flex-1 px-6 py-12 overflow-y-auto">
           <div className="max-w-6xl mx-auto">
-            {/* Categories */}
-            <div className="my-8">
-              <h2 className="text-xl font-semibold mb-4">Community Topics</h2>
-              <div className="flex flex-wrap gap-3">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 shadow-md hover:shadow-lg ${
-                      selectedCategory === category ? 'bg-[#A32E76] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <h2 className="text-xl font-semibold mb-8">Community For You</h2>
 
             {/* Groups */}
-            <div className="space-y-6">
-              <h2 className="text-xl font-semibold">Groups You Can Join</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredGroups.map((group) => (
-                <div key={group.name} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-                  <h3 className="font-medium text-lg">{group.name}</h3>
-                  <p className="text-sm text-gray-600 mt-2">{group.description}</p>
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="text-xs text-gray-500">{group.members} Members</span>
+                <div 
+                  key={group.name} 
+                  className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center w-64 h-64"
+                >
+                  {/* Group Name */}
+                  <h3 className="font-semibold text-lg text-gray-800">{group.name}</h3>
+                  
+                  {/* Description */}
+                  <p className="text-sm text-gray-600 mt-2 line-clamp-3">
+                    {group.description}
+                  </p>
+                  
+                  {/* Members Count */}
+                  <span className="text-xs text-gray-500 mt-auto">
+                    {group.members} Members
+                  </span>
+                  
+                  {/* Action Button */}
+                  <div className="mt-4">
                     {requestedGroups.includes(group.name) ? (
                       <span className="text-sm text-green-500">Request Sent</span>
                     ) : (
@@ -144,7 +136,7 @@ export function Community() {
               <CheckCircle className="w-12 h-12 text-green-500 mb-4" />
               <h3 className="text-lg font-semibold text-center">Request Sent Successfully!</h3>
               <p className="text-sm text-gray-600 text-center mt-2">
-                Your request to join "{selectedGroup?.name}" has been sent.
+                Your request to join the group has been sent.
               </p>
               <div className="w-full bg-gray-200 rounded-full h-1.5 mt-4">
                 <div style={{ animation: 'progress 1.5s ease-in-out' }} className="bg-green-500 h-1.5 rounded-full" />

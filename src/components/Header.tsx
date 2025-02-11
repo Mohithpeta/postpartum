@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { Search, Mic, Bell, ChevronDown } from 'lucide-react';
 
-
 interface HeaderProps {
   placeholder?: string;
   onSearch?: (query: string) => void;
+  onTopicChange: (topic: string) => void;
   searchQuery?: string;
   streamedTime?: string;
 }
@@ -15,8 +15,9 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
   const [showNotifications, setShowNotifications] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('English');
+  const [selectedTopic, setSelectedTopic] = useState('Hypertension');
 
-  const topics = ['Preconception', 'Pregnancy', 'Postpartum', 'Parenting'];
+  const topics = ['Hypertension', 'Urinary Incontinence', 'Depression', 'Secondary Infertility', 'PostPartum Anxiety', 'Pelvic Organ Prolapse', 'Dyspareunia', 'Obesity', 'Back Pain', 'Anal Incontinence'];
   const languages = ['English', 'Telugu', 'Tamil', 'Hindi'];
   const notifications = [
     { id: 1, title: 'New live session starting', time: '5 minutes ago' },
@@ -49,7 +50,12 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
 
   const handleLanguageChange = (language: string) => {
     setSelectedLanguage(language);
-    setShowLanguageDropdown(false); 
+    setShowLanguageDropdown(false);
+  };
+
+  const handleTopicChange = (topic: string) => {
+    setSelectedTopic(topic);
+    setShowTopicDropdown(false);
   };
 
   const handleMicClick = () => {
@@ -98,7 +104,8 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
               {showNotifications && (
                 <div 
                   ref={notificationDropdownRef}
-                  className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
+                  className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn"
+                >
                   {notifications.map((notification) => (
                     <div key={notification.id} className="px-4 py-3 hover:bg-gray-50 cursor-pointer">
                       <p className="text-sm font-medium text-gray-800">{notification.title}</p>
@@ -113,9 +120,11 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
             <div className="relative">
               <button 
                 onClick={() => setShowTopicDropdown(!showTopicDropdown)}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors ${
+                  showTopicDropdown ? 'bg-[#a32e76] text-white' : 'text-gray-700 hover:bg-gray-100'
+                }`}
               >
-                <span>Preconception</span>
+                <span>{selectedTopic}</span>
                 <ChevronDown className={`w-4 h-4 transition-transform ${showTopicDropdown ? 'rotate-180' : ''}`} />
               </button>
 
@@ -123,11 +132,17 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
               {showTopicDropdown && (
                 <div 
                   ref={topicDropdownRef}
-                  className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
+                  className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn"
+                >
                   {topics.map((topic) => (
                     <button
                       key={topic}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      onClick={() => handleTopicChange(topic)}
+                      className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                        selectedTopic === topic 
+                          ? 'bg-[#a32e76] text-white' 
+                          : 'text-gray-700 hover:bg-gray-50'
+                      }`}
                     >
                       {topic}
                     </button>
@@ -140,7 +155,9 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
             <div className="relative">
               <button 
                 onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors ${
+                  showLanguageDropdown ? 'bg-[#a32e76] text-white' : 'text-gray-700 hover:bg-gray-100'
+                }`}
               >
                 <span>{selectedLanguage}</span>
                 <ChevronDown className={`w-4 h-4 transition-transform ${showLanguageDropdown ? 'rotate-180' : ''}`} />
@@ -150,12 +167,17 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
               {showLanguageDropdown && (
                 <div 
                   ref={languageDropdownRef}
-                  className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn">
+                  className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-fadeIn"
+                >
                   {languages.map((language) => (
                     <button
                       key={language}
-                      onClick={() => handleLanguageChange(language)} 
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" 
+                      onClick={() => handleLanguageChange(language)}
+                      className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                        selectedLanguage === language 
+                          ? 'bg-[#a32e76] text-white' 
+                          : 'text-gray-700 hover:bg-gray-50'
+                      }`}
                     >
                       {language}
                     </button>

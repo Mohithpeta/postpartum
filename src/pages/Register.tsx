@@ -52,7 +52,7 @@ export function Register() {
       handleNext();
     } else {
       try {
-        const response = await axios.post("http://localhost:8000/auth/signup", formData, {
+        const response = await axios.post("http://localhost:8000/auth/signup/user", formData, {
           headers: { 'Content-Type': 'application/json' },
         });
 
