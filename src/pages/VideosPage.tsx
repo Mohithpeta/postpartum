@@ -36,7 +36,8 @@ export function VideosPage() {
     'Screening & Diagnosis',
     'Treatment Options',
     'Prevention',
-    'Latest Research'
+    'Latest Research',
+    'Pregnancy'
   ];
 
   // Fetch videos from backend

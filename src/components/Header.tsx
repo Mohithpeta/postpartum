@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Search, Mic, Bell, ChevronDown } from 'lucide-react';
+import { Search, Mic, Bell, ChevronDown, LogOut } from 'lucide-react';
 
 interface HeaderProps {
   placeholder?: string;
@@ -16,6 +16,7 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
   const [isRecording, setIsRecording] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [selectedTopic, setSelectedTopic] = useState('Hypertension');
+  const [searchValue, setSearchValue] = useState('');
 
   const topics = ['Hypertension', 'Urinary Incontinence', 'Depression', 'Secondary Infertility', 'PostPartum Anxiety', 'Pelvic Organ Prolapse', 'Dyspareunia', 'Obesity', 'Back Pain', 'Anal Incontinence'];
   const languages = ['English', 'Telugu', 'Tamil', 'Hindi'];
@@ -28,6 +29,12 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
   const languageDropdownRef = useRef<HTMLDivElement>(null);
   const notificationDropdownRef = useRef<HTMLDivElement>(null);
   const topicDropdownRef = useRef<HTMLDivElement>(null);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const useOutsideClick = (ref: React.RefObject<HTMLDivElement>, callback: () => void) => {
     useEffect(() => {
@@ -63,6 +70,12 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
     // Add voice recognition logic here
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    onSearch?.(value);
+  };
+
   return (
     <div className="w-full bg-white border-b border-gray-200 relative z-50">
       <div className="max-w-7xl mx-auto px-4 py-3">
@@ -72,19 +85,20 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
             <div className="relative flex-1">
               <input
                 type="text"
-                onChange={(e) => onSearch?.(e.target.value)}
+                value={searchValue}
+                onChange={handleSearch}
                 placeholder={placeholder}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#E91E63] focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#a32e76] focus:border-transparent"
               />
               <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
             <button 
               onClick={handleMicClick}
               className={`p-2 border-y border-r border-gray-300 rounded-r-md hover:bg-gray-50 transition-colors ${
-                isRecording ? 'bg-pink-50 text-[#E91E63]' : ''
+                isRecording ? 'bg-[#a32e76] bg-opacity-10 text-[#a32e76]' : ''
               }`}
             >
-              <Mic className={`w-5 h-5 ${isRecording ? 'text-[#E91E63] animate-pulse' : 'text-gray-500'}`} />
+              <Mic className={`w-5 h-5 ${isRecording ? 'text-[#a32e76] animate-pulse' : 'text-gray-500'}`} />
             </button>
           </div>
 
@@ -94,10 +108,12 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
             <div className="relative">
               <button 
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="p-2 hover:bg-gray-100 rounded-full relative transition-transform hover:scale-105"
+                className={`p-2 rounded-full relative transition-transform hover:scale-105 ${
+                  showNotifications ? 'bg-[#a32e76] bg-opacity-10' : 'hover:bg-gray-100'
+                }`}
               >
-                <Bell className="w-5 h-5 text-gray-600" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-[#E91E63] rounded-full animate-pulse"></span>
+                <Bell className={`w-5 h-5 ${showNotifications ? 'text-[#a32e76]' : 'text-gray-600'}`} />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-[#a32e76] rounded-full animate-pulse"></span>
               </button>
 
               {/* Notifications Dropdown */}
@@ -141,7 +157,7 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
                       className={`w-full text-left px-4 py-2 text-sm transition-colors ${
                         selectedTopic === topic 
                           ? 'bg-[#a32e76] text-white' 
-                          : 'text-gray-700 hover:bg-gray-50'
+                          : 'text-gray-700 hover:bg-[#a32e76] hover:bg-opacity-10'
                       }`}
                     >
                       {topic}
@@ -176,7 +192,7 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
                       className={`w-full text-left px-4 py-2 text-sm transition-colors ${
                         selectedLanguage === language 
                           ? 'bg-[#a32e76] text-white' 
-                          : 'text-gray-700 hover:bg-gray-50'
+                          : 'text-gray-700 hover:bg-[#a32e76] hover:bg-opacity-10'
                       }`}
                     >
                       {language}
@@ -185,6 +201,16 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
                 </div>
               )}
             </div>
+
+            {/* Logout Button */}
+            <button
+  onClick={logout}
+  className="flex items-center gap-2 px-3 py-2 text-sm rounded-md border border-[#a32e76] text-[#a32e76] hover:bg-[#a32e76] hover:text-white transition-all duration-300 shadow-sm"
+>
+  <LogOut className="w-4 h-4" />
+  <span>Logout</span>
+</button>
+
           </div>
         </div>
       </div>
