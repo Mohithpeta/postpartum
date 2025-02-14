@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Download, Plus, ZoomIn, ZoomOut } from 'lucide-react';
+import { ArrowLeft, Download, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import {
   LineChart,
@@ -38,8 +38,9 @@ export function Anemia() {
   });
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
-  const [zoomLevel, setZoomLevel] = useState(1);
   const [selectedMetric, setSelectedMetric] = useState<'hemoglobin' | 'cbc'>('hemoglobin');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
@@ -99,7 +100,7 @@ export function Anemia() {
     link.click();
   };
 
-  const getAnemiaStatus = (hemoglobin: number, cbc: number) => {
+  const getAnemiaStatus = (hemoglobin: number) => {
     if (hemoglobin < 12) {
       return { status: 'Anemia', color: 'text-red-500' };
     }
@@ -110,6 +111,13 @@ export function Anemia() {
     hemoglobin: { color: '#ef4444', name: 'Hemoglobin', unit: 'g/dL', range: '12-16' },
     cbc: { color: '#3b82f6', name: 'CBC', unit: 'million cells/mcL', range: '3.5-7.5' },
   };
+
+  const filteredReadings = readings.filter(reading => {
+    const readingDate = new Date(reading.timestamp).getTime();
+    const from = fromDate ? new Date(fromDate).getTime() : -Infinity;
+    const to = toDate ? new Date(toDate).getTime() : Infinity;
+    return readingDate >= from && readingDate <= to;
+  });
 
   return (
     <div className="p-6">
@@ -203,20 +211,20 @@ export function Anemia() {
                   <option value="hemoglobin">Hemoglobin</option>
                   <option value="cbc">CBC</option>
                 </select>
-                <button
-                  onClick={() => setZoomLevel(Math.max(1, zoomLevel - 0.5))}
-                  className="p-2 rounded-md hover:bg-gray-100"
-                  aria-label="Zoom out"
-                >
-                  <ZoomOut className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => setZoomLevel(Math.min(2, zoomLevel + 0.5))}
-                  className="p-2 rounded-md hover:bg-gray-100"
-                  aria-label="Zoom in"
-                >
-                  <ZoomIn className="w-5 h-5" />
-                </button>
+                <input
+                  type="date"
+                  value={fromDate}
+                  onChange={(e) => setFromDate(e.target.value)}
+                  className="p-2 border rounded-md"
+                  placeholder="From Date"
+                />
+                <input
+                  type="date"
+                  value={toDate}
+                  onChange={(e) => setToDate(e.target.value)}
+                  className="p-2 border rounded-md"
+                  placeholder="To Date"
+                />
                 <button
                   onClick={exportToCSV}
                   className="p-2 rounded-md hover:bg-gray-100"
@@ -229,7 +237,7 @@ export function Anemia() {
 
             <div style={{ width: '100%', height: 400 }}>
               <ResponsiveContainer>
-                <LineChart data={readings} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <LineChart data={filteredReadings} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis
                     dataKey="timestamp"
@@ -281,13 +289,11 @@ export function Anemia() {
                   </tr>
                 </thead>
                 <tbody>
-                  {[...readings].reverse().map((reading, index) => {
-                    const status = getAnemiaStatus(reading.hemoglobin, reading.cbc);
+                  {[...filteredReadings].reverse().map((reading, index) => {
+                    const status = getAnemiaStatus(reading.hemoglobin);
                     return (
                       <tr key={index} className="border-b last:border-0">
-                        <td className="py-2">
-                          {new Date(reading.timestamp).toLocaleString()}
-                        </td>
+                        <td className="py-2">{new Date(reading.timestamp).toLocaleString()}</td>
                         <td className="py-2">{reading.hemoglobin} g/dL</td>
                         <td className="py-2">{reading.cbc} million cells/mcL</td>
                         <td className={`py-2 ${status.color}`}>{status.status}</td>

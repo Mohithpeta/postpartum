@@ -181,7 +181,7 @@ export function Live() {
       <Sidebar />
       <div className="flex-1 overflow-y-auto">
         <div className="sticky top-0 z-50 bg-white border-b">
-          <Header onSearch={setSearchQuery} />
+          <Header onSearch={setSearchQuery} onTopicChange={() => {}} />
           <div className="max-w-7xl mx-auto px-4 py-3">
             <div className="flex space-x-3">
               <CategoryButton category="all" label="All" />

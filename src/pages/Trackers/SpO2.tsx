@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Download, Plus, ZoomIn, ZoomOut } from 'lucide-react';
+import { ArrowLeft, Download, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import {
   LineChart,
@@ -38,7 +38,7 @@ export function SpO2() {
   });
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
-  const [zoomLevel, setZoomLevel] = useState(1);
+  const [dateRange, setDateRange] = useState({ from: '', to: '' });
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
@@ -54,7 +54,7 @@ export function SpO2() {
       newErrors.pulseRate = 'Pulse rate must be between 40 and 220 BPM';
     }
 
-    if (timestamp > new Date()) {
+    if (timestamp.getTime() > new Date().getTime()) {
       newErrors.timestamp = 'Future timestamps are not allowed';
     }
 
@@ -104,6 +104,14 @@ export function SpO2() {
     if (oxygen >= 85) return { color: 'text-orange-500', label: 'Moderate Hypoxemia' };
     return { color: 'text-red-500', label: 'Severe Hypoxemia' };
   };
+
+  const filteredReadings = readings.filter(reading => {
+    const readingDate = new Date(reading.timestamp);
+    const fromDate = dateRange.from ? new Date(dateRange.from) : null;
+    const toDate = dateRange.to ? new Date(dateRange.to) : null;
+
+    return (!fromDate || readingDate >= fromDate) && (!toDate || readingDate <= toDate);
+  });
 
   return (
     <div className="p-6">
@@ -187,20 +195,30 @@ export function SpO2() {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-semibold">SpO2 Chart</h2>
               <div className="flex gap-2">
-                <button
-                  onClick={() => setZoomLevel(Math.max(1, zoomLevel - 0.5))}
-                  className="p-2 rounded-md hover:bg-gray-100"
-                  aria-label="Zoom out"
-                >
-                  <ZoomOut className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => setZoomLevel(Math.min(2, zoomLevel + 0.5))}
-                  className="p-2 rounded-md hover:bg-gray-100"
-                  aria-label="Zoom in"
-                >
-                  <ZoomIn className="w-5 h-5" />
-                </button>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    From Date
+                  </label>
+                  <input
+                    type="date"
+                    value={dateRange.from}
+                    onChange={(e) => setDateRange({ ...dateRange, from: e.target.value })}
+                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    placeholder="From"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    To Date
+                  </label>
+                  <input
+                    type="date"
+                    value={dateRange.to}
+                    onChange={(e) => setDateRange({ ...dateRange, to: e.target.value })}
+                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    placeholder="To"
+                  />
+                </div>
                 <button
                   onClick={exportToCSV}
                   className="p-2 rounded-md hover:bg-gray-100"
@@ -214,7 +232,7 @@ export function SpO2() {
             <div style={{ width: '100%', height: 400 }}>
               <ResponsiveContainer>
                 <LineChart
-                  data={readings}
+                  data={filteredReadings}
                   margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
@@ -264,7 +282,7 @@ export function SpO2() {
                   </tr>
                 </thead>
                 <tbody>
-                  {[...readings].reverse().map((reading, index) => (
+                  {[...filteredReadings].reverse().map((reading, index) => (
                     <tr key={index} className="border-b last:border-0">
                       <td className="py-2">
                         {new Date(reading.timestamp).toLocaleString()}

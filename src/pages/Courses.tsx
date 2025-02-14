@@ -7,7 +7,8 @@ import {
   X, 
   Download, 
   ThumbsUp,
-  CheckCircle,
+  ThumbsDown,
+  ShieldCheckIcon
 
 } from 'lucide-react';
 import { Header } from '../components/Header';
@@ -67,7 +68,7 @@ const CoursesPage = () => {
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.95 }}
-            className="bg-white rounded-2xl w-full max-w-md relative overflow-hidden"
+            className="bg-white rounded-2xl w-full max-w-[532px] max-h-[477px] relative overflow-hidden"
           >
             <button
               onClick={() => {
@@ -132,7 +133,7 @@ const CoursesPage = () => {
           initial={{ scale: 0.95 }}
           animate={{ scale: 1 }}
           exit={{ scale: 0.95 }}
-          className="bg-white rounded-2xl w-full max-w-md relative overflow-hidden"
+          className="bg-white rounded-2xl w-full max-w-[532px] max-h-[477px] relative overflow-hidden"
         >
           <button
             onClick={() => {
@@ -151,12 +152,12 @@ const CoursesPage = () => {
 
             <div className="space-y-4 mb-6">
               <div className="flex items-center gap-3 text-purple-600 font-medium">
-                <CheckCircle size={18} className="flex-shrink-0" />
+                <ShieldCheckIcon size={18} className="flex-shrink-0" />
                 <p>Upgrade to Premium for ₹ 2000</p>
               </div>
               {perks.map((perk, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <CheckCircle size={18} className="text-purple-600 mt-0.5 flex-shrink-0" />
+                  <ShieldCheckIcon size={18} className="text-purple-600 mt-0.5 flex-shrink-0" />
                   <p className="text-gray-700 text-sm">{perk}</p>
                 </div>
               ))}
@@ -172,7 +173,7 @@ const CoursesPage = () => {
               onClick={() => setShowQRCode(true)}
               className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 flex items-center justify-center gap-2"
             >
-              Next <span className="text-lg">→</span>
+              Next <span className="text-lg" >→</span>
             </button>
           </div>
         </motion.div>
@@ -187,36 +188,40 @@ const CoursesPage = () => {
         <Header 
           searchQuery={searchQuery}
           onSearch={setSearchQuery}
+          onTopicChange={(topic) => console.log(topic)}
         />
         <div className="flex-1 overflow-y-auto px-8 py-6">
           <div className="flex gap-8 max-w-7xl mx-auto">
-            <div className="flex-1">
-              <div className="relative w-full aspect-video bg-gray-900 rounded-xl overflow-hidden mb-6">
-                <img src="/api/placeholder/800/450" alt="Course Video" className="w-full h-full object-cover" />
+            <div className="flex-1" style={{width:"655", height:"263"}}>
+                <div className="relative w-full aspect-video bg-gray-900 rounded-xl overflow-hidden mb-6">
+                <img src="/api/placeholder/800/450" alt="Course Video" className="w-full h-full object-cover" style={{width: "657" , height:"372"}}/>
                 {isPremiumContent ? (
-                  <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center text-white">
-                    <Lock className="w-16 h-16 mb-4 text-[#a32e76]" />
-                    <div className="text-lg mb-2">Unlock premium access</div>
+                  <div className="absolute bottom-4 left-4 bg-black bg-opacity-70 p-4 rounded-lg text-white flex items-center">
+                  <Lock className="w-8 h-8 mr-4 text-[#a32e76]" />
+                  <div>
+                    <div className="text-lg mb-2">Unlock premium to access course & perks</div>
                     <div className="text-[#a32e76] font-semibold">₹ {courseData.price}</div>
+                  </div>
                     <button 
-                      onClick={() => setShowPaymentFlow(true)}
-                      className="bg-[#a32e76] text-white px-6 py-2 rounded-lg hover:bg-[#922667]"
+                    onClick={() => setShowPaymentFlow(true)}
+                    className="bg-[#a32e76] text-white px-6 py-2 rounded-full hover:bg-[#922667] ml-4"
                     >
-                      Unlock Premium
+                    Unlock Premium
                     </button>
                   </div>
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <Play className="w-16 h-16 text-white cursor-pointer" />
+                  <Play className="w-16 h-16 text-white cursor-pointer" />
                   </div>
                 )}
-              </div>
+                </div>
 
               <div className="flex items-center gap-4 mb-4">
                 <h1 className="text-xl font-medium flex-1">{courseData.title}</h1>
                 <div className="flex items-center gap-2">
-                  <ThumbsUp size={20} className="text-gray-400" />
-                  <Download size={20} className="text-gray-400" />
+                  <ThumbsUp size={20} className="text-gray-400" /><span className="text-gray-400">Like</span>
+                  <ThumbsDown size={20} className="text-gray-400" /><span className="text-gray-400">Dislike</span>
+                  <Download size={20} className="text-gray-400" /><span className="text-gray-400">Download</span>
                 </div>
               </div>
 
@@ -230,30 +235,30 @@ const CoursesPage = () => {
                 <span className="text-sm text-gray-600">{courseData.stats.lastUpdated}</span>
               </div>
 
-              <div className="bg-white rounded-xl p-4 my-6 shadow-sm">
-                <p className="text-gray-700">Want to speak directly to a doctor? Upgrade to Premium for 1:1 messaging & much more benefits.</p>
-                <button 
-                  onClick={() => setShowPaymentFlow(true)}
-                  className="bg-[#a32e76] text-white px-6 py-2 rounded-lg hover:bg-[#922667] mt-4"
-                >
-                  Unlock Premium
-                </button>
+              <div className="  p-4 my-6 ">
+                <p className="text-gray-700">This Intro is a collaborative effort by a team of experts specializing in postpartum care and hypertension</p>
               </div>
 
-              <div className="space-y-4 mb-6">
+                <div className="flex gap-4 mb-6 overflow-x-auto">
                 {courseData.instructors.map((instructor, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <img src="/api/placeholder/32/32" alt={instructor.name} className="w-8 h-8 rounded-full" />
-                    <div className="text-sm text-[#a32e76]">{instructor.name}</div>
-                    <div className="text-xs text-gray-600">{instructor.title}</div>
-                    <span className="text-xs px-2 py-1 bg-[#a32e76] bg-opacity-10 text-[#a32e76] rounded-lg">
-                      {instructor.type}
-                    </span>
+                  <div key={index} className="flex-shrink-0 w-1/4 max-w-xs h-72 bg-white rounded-lg shadow-md p-4 flex flex-col items-center">
+                  <img src="/api/placeholder/194/194" alt={instructor.name} className="w-24 h-24 rounded-full object-cover mb-4" />
+                  <div className="text-center mb-4">
+                  <div className="text-sm font-bold text-[#a32e76]">{instructor.name}</div>
+                  <div className="text-xs text-gray-600">{instructor.title}</div>
+                  <span className="text-xs px-2 py-1 bg-[#a32e76] bg-opacity-10 text-[#a32e76] rounded-lg inline-block mt-2">
+                  {instructor.type}
+                  </span>
+                  </div>
+                  <div className="flex gap-2 mt-auto">
+                  <button className="text-xs px-4 py-2 bg-gray-200 rounded-lg">View Profile</button>
+                  <button className="text-xs px-4 py-2 bg-[#a32e76] text-white rounded-lg">Message</button>
+                  </div>
                   </div>
                 ))}
-              </div>
+                </div>
 
-              <div className="bg-white rounded-xl p-4">
+              <div className="">
                 <p className="text-gray-700 text-sm">
                   Discover actionable advice from doctors to manage postpartum hypertension effectively. 
                   This video covers tips on maintaining a heart-healthy diet...
@@ -266,7 +271,7 @@ const CoursesPage = () => {
               <div className="bg-white rounded-xl shadow-sm">
                 <div className="p-4 border-b flex items-center justify-between">
                   <h2 className="font-medium">Course Content</h2>
-                  <span className="text-sm text-gray-600">{currentLesson}/{courseData.lessons.length}</span>
+                  <span className="text-sm text-gray-600" style={{width:"270" , height:"81"}}>{currentLesson}/{courseData.lessons.length}</span>
                 </div>
                 <div className="divide-y">
                   {courseData.lessons.map((lesson, index) => (

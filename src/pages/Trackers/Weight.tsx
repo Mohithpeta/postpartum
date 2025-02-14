@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Download, Plus, ZoomIn, ZoomOut } from 'lucide-react';
+import { ArrowLeft, Download, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import {
   LineChart,
@@ -39,7 +39,8 @@ export function Weight() {
 
   const [displayUnit, setDisplayUnit] = useState<'kg' | 'lbs'>('kg');
   const [errors, setErrors] = useState<Partial<FormData>>({});
-  const [zoomLevel, setZoomLevel] = useState(1);
+  const [fromDate, setFromDate] = useState<string>('');
+  const [toDate, setToDate] = useState<string>('');
 
   const convertWeight = (weight: number, fromUnit: 'kg' | 'lbs', toUnit: 'kg' | 'lbs'): number => {
     if (fromUnit === toUnit) return weight;
@@ -109,7 +110,14 @@ export function Weight() {
     link.click();
   };
 
-  const chartData = readings.map(reading => ({
+  const filteredReadings = readings.filter(reading => {
+    const readingDate = new Date(reading.timestamp).getTime();
+    const from = fromDate ? new Date(fromDate).getTime() : -Infinity;
+    const to = toDate ? new Date(toDate).getTime() : Infinity;
+    return readingDate >= from && readingDate <= to;
+  });
+
+  const chartData = filteredReadings.map(reading => ({
     timestamp: reading.timestamp,
     weight: getDisplayWeight(reading),
   }));
@@ -201,20 +209,30 @@ export function Weight() {
                 </select>
               </div>
               <div className="flex gap-2">
-                <button
-                  onClick={() => setZoomLevel(Math.max(1, zoomLevel - 0.5))}
-                  className="p-2 rounded-md hover:bg-gray-100"
-                  aria-label="Zoom out"
-                >
-                  <ZoomOut className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => setZoomLevel(Math.min(2, zoomLevel + 0.5))}
-                  className="p-2 rounded-md hover:bg-gray-100"
-                  aria-label="Zoom in"
-                >
-                  <ZoomIn className="w-5 h-5" />
-                </button>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    From Date
+                  </label>
+                  <input
+                    type="date"
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
+                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    placeholder="From Date"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    To Date
+                  </label>
+                  <input
+                    type="date"
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
+                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    placeholder="To Date"
+                  />
+                </div>
                 <button
                   onClick={exportToCSV}
                   className="p-2 rounded-md hover:bg-gray-100"
@@ -275,7 +293,7 @@ export function Weight() {
                   </tr>
                 </thead>
                 <tbody>
-                  {[...readings].reverse().map((reading, index) => (
+                  {[...filteredReadings].reverse().map((reading, index) => (
                     <tr key={index} className="border-b last:border-0">
                       <td className="py-2">
                         {new Date(reading.timestamp).toLocaleString()}

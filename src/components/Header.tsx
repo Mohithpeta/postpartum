@@ -34,6 +34,9 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
     window.location.href = "/login";
+    if (localStorage.getItem("token") === null) {
+      window.location.href = "/login";
+    }
   };
 
   const useOutsideClick = (ref: React.RefObject<HTMLDivElement>, callback: () => void) => {

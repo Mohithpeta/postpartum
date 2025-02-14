@@ -83,6 +83,7 @@ export function LifeCourseExperts() {
         <Header
           placeholder="Search LifeCourse Experts"
           onSearch={setSearchQuery}
+          onTopicChange={(topic) => console.log(topic)}
         />
         <div className="flex-1 p-8 overflow-y-auto">
           <div className="max-w-6xl mx-auto">

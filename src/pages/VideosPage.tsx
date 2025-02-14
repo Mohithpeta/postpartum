@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Sidebar } from '../components/Sidebar';
 import { Header } from '../components/Header';
-import { Play, ThumbsUp, MessageCircle, Verified, Clock } from 'lucide-react';
+import { Play} from 'lucide-react';
 import axios from 'axios';
 
 interface Video {
@@ -19,6 +19,7 @@ interface Video {
   upload_date: string;
   comments?: number;
   likes?: number;
+  youtube_url: string;
 }
 
 export function VideosPage() {
@@ -27,6 +28,7 @@ export function VideosPage() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   const categories = [
     'All',
@@ -40,7 +42,6 @@ export function VideosPage() {
     'Pregnancy'
   ];
 
-  // Fetch videos from backend
   useEffect(() => {
     const fetchVideos = async () => {
       const token = localStorage.getItem('token'); 
@@ -66,7 +67,6 @@ export function VideosPage() {
     fetchVideos();
   }, []);
 
-  // Filter videos based on search and category
   const filteredVideos = useMemo(() => {
     return videos.filter((video) => {
       const matchesSearch =
@@ -87,7 +87,6 @@ export function VideosPage() {
         <Header placeholder="Search videos..." onSearch={setSearchQuery} onTopicChange={() => {}} />
 
         <div className="flex-1 overflow-y-auto">
-          {/* Categories Bar */}
           <div className="sticky top-0 z-10 bg-white border-b border-gray-200">
             <div className="max-w-[1800px] mx-auto px-4">
               <div className="flex space-x-3 overflow-x-auto py-3 scrollbar-hide">
@@ -108,7 +107,6 @@ export function VideosPage() {
             </div>
           </div>
 
-          {/* Loading and Error Messages */}
           {loading ? (
             <p className="text-center text-gray-500 mt-8">Loading videos...</p>
           ) : error ? (
@@ -119,76 +117,38 @@ export function VideosPage() {
             <div className="max-w-[1800px] mx-auto p-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredVideos.map((video) => (
-                  <div key={video._id} className="group cursor-pointer">
-                    {/* Thumbnail */}
-                    <div className="relative aspect-video rounded-xl overflow-hidden mb-3">
-                      <img
-                        src={video.thumbnail}
-                        alt={video.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                      />
-                      {/* Duration Badge */}
-                      {video.duration && (
-                        <div className="absolute bottom-2 right-2 bg-black bg-opacity-80 text-white text-xs px-2 py-1 rounded">
-                          {video.duration}
-                        </div>
-                      )}
-                      {/* Play Overlay */}
-                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center">
-                        <Play className="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div key={video._id} className="group cursor-pointer" onClick={() => setActiveVideo(video._id)}>
+                    {activeVideo === video._id ? (
+                      <div className="relative aspect-video rounded-xl overflow-hidden mb-3">
+                        <iframe
+                          className="w-full h-full"
+                          src={`https://www.youtube.com/embed/${new URL(video.youtube_url).searchParams.get('v')}?autoplay=1&rel=0`}
+                          title={video.title}
+                          frameBorder="0"
+                          allow="autoplay; encrypted-media"
+                          allowFullScreen
+                        ></iframe>
                       </div>
-                    </div>
-
-                    {/* Content Section */}
-                    <div className="flex space-x-3">
-                      {/* Doctor Avatar */}
-                      <div className="flex-shrink-0">
+                    ) : (
+                      <div className="relative aspect-video rounded-xl overflow-hidden mb-3">
                         <img
-                          src={video.doctor?.avatar || 'https://via.placeholder.com/40'}
-                          alt={video.doctor?.name || 'Unknown'}
-                          className="w-10 h-10 rounded-full"
+                          src={video.thumbnail}
+                          alt={video.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                         />
-                      </div>
-
-                      {/* Video Info */}
-                      <div className="flex-1 min-w-0">
-                        {/* Title */}
-                        <h3 className="text-base font-medium text-gray-900 line-clamp-2 mb-1 group-hover:text-[#a32e76]">
-                          {video.title}
-                        </h3>
-
-                        {/* Doctor Info */}
-                        <div className="flex items-center text-sm text-gray-600 mb-1">
-                          <span className="truncate">{video.doctor?.name || 'Unknown'}</span>
-                          {video.doctor?.verified && (
-                            <Verified className="w-4 h-4 text-[#a32e76] ml-1" />
-                          )}
-                        </div>
-
-                        {/* Video Stats */}
-                        <div className="flex items-center text-sm text-gray-600 space-x-2">
-                          <span>{video.views ? video.views.toLocaleString() : '0'} views</span>
-                          <span>•</span>
-                          <span className="flex items-center">
-                            <Clock className="w-3 h-3 mr-1" />
-                            {video.upload_date}
-                          </span>
-                        </div>
-
-
-                        {/* Engagement Stats */}
-                        <div className="mt-2 flex items-center space-x-4 text-xs text-gray-600">
-                          <div className="flex items-center space-x-1">
-                            <ThumbsUp className="w-3 h-3" />
-                            <span>{video.likes ?? 0}</span>
+                        {video.duration && (
+                          <div className="absolute bottom-2 right-2 bg-black bg-opacity-80 text-white text-xs px-2 py-1 rounded">
+                            {video.duration}
                           </div>
-                          <div className="flex items-center space-x-1">
-                            <MessageCircle className="w-3 h-3" />
-                            <span>{video.comments ?? 0}</span>
-                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center">
+                          <Play className="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
                         </div>
                       </div>
-                    </div>
+                    )}
+                    <h3 className="text-base font-medium text-gray-900 line-clamp-2 mb-1 group-hover:text-[#a32e76]">
+                      {video.title}
+                    </h3>
                   </div>
                 ))}
               </div>
