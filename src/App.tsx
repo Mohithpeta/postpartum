@@ -18,8 +18,8 @@ import { Anemia } from "./pages/Trackers/Anemia";
 import { VideosPage } from "./pages/VideosPage";
 import CoursesPage from "./pages/Courses";
 import AuthGuard from "./components/AuthGuard";
-import { CommunityIntro } from "./components/Community/CommunityIntro";
-import GroupsList from "./components/Community/GroupsList";
+// import { CommunityIntro } from "./components/Community/CommunityIntro";
+// import GroupsList from "./components/Community/GroupsList";
 
 
 const ProtectedRoutes = () => (
@@ -46,8 +46,9 @@ function App() {
           <Route path="/experts" element={<LifeCourseExperts />} />
           <Route path="/live" element={<Live />} />
           <Route path="/community/*" element={<Community />} />
-          <Route index element={<CommunityIntro />} />
-          <Route path="groups" element={<GroupsList />} />
+          {/* <Route path="/community/community-intro" element={<CommunityIntro />} />
+          <Route index element={<CommunityIntro />} /> */}
+          {/* <Route path="groups" element={<GroupsList />} /> */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/:id" element={<DoctorProfile />} />
           <Route path="/videos" element={<VideosPage />} />
