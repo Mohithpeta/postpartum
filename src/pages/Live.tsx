@@ -90,10 +90,10 @@ export function Live() {
   const CategoryButton = ({ category, label }: { category: string; label: string }) => (
     <button
       onClick={() => setActiveTab(category)}
-      className={`px-4 py-1.5 rounded-full text-sm font-medium ${
+      className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
         activeTab === category
           ? 'bg-[#a32e76] text-white'
-          : 'bg-pink-50 text-gray-600 hover:bg-pink-100'
+          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
       }`}
     >
       {label}
@@ -101,7 +101,7 @@ export function Live() {
   );
 
   const SessionCard = ({ session }: { session: Session }) => (
-    <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow w-full">
+    <div className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow w-full">
       <div className="relative w-full">
         <div className="w-full aspect-video">
           <img
@@ -111,34 +111,34 @@ export function Live() {
           />
         </div>
         {session.status === 'live' && (
-          <span className="absolute top-2 left-2 bg-red-500 text-white px-2 py-0.5 rounded text-xs">
+          <span className="absolute top-2 left-2 bg-red-600 text-white px-2 py-0.5 rounded text-xs font-bold">
             LIVE
           </span>
         )}
       </div>
-      <div className="p-3">
-        <div className="flex items-center space-x-2 mb-2">
+      <div className="p-4">
+        <div className="flex items-center space-x-3 mb-3">
           <img
             src="/api/placeholder/32/32"
             alt={session.doctor}
-            className="w-8 h-8 rounded-full"
+            className="w-10 h-10 rounded-full"
           />
           <div>
-            <h3 className="text-sm font-medium text-gray-900 line-clamp-2">{session.title}</h3>
-            <p className="text-sm text-gray-500">{session.doctor}</p>
+            <h3 className="text-base font-semibold text-gray-900 line-clamp-2">{session.title}</h3>
+            <p className="text-sm text-gray-600">{session.doctor}</p>
           </div>
         </div>
-        <div className="flex justify-between items-center mt-3">
+        <div className="flex justify-between items-center mt-4">
           <span className="text-sm text-gray-500">
             {'watching' in session ? session.watching : session.views}
           </span>
           <button 
-            className={`px-4 py-1.5 rounded-full text-sm font-medium ${
+            className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
               session.status === 'live'
                 ? 'bg-[#a32e76] text-white'
                 : session.status === 'upcoming'
                 ? 'border border-[#a32e76] text-[#a32e76]'
-                : 'bg-gray-100 text-gray-600'
+                : 'bg-gray-200 text-gray-700'
             }`}
           >
             {session.status === 'live' ? 'Watch Live →' :
@@ -161,14 +161,14 @@ export function Live() {
 
     return (
       <div>
-        <h2 className="text-lg font-medium mb-4">{title}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl">
+        <h2 className="text-xl font-semibold mb-6">{title}</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredSessions.map((session, index) => (
             <SessionCard key={`${session.status}-${index}`} session={session} />
           ))}
         </div>
         {title === 'Recent Live' && filteredSessions.length > 0 && (
-          <button className="mt-4 text-[#a32e76] text-sm font-medium block mx-auto">
+          <button className="mt-6 text-[#a32e76] text-sm font-semibold block mx-auto">
             Show more recent live ▼
           </button>
         )}
@@ -177,13 +177,13 @@ export function Live() {
   };
 
   return (
-    <div className="flex h-screen bg-pink-50">
+    <div className="flex h-screen bg-gray-100">
       <Sidebar />
       <div className="flex-1 overflow-y-auto">
-        <div className="sticky top-0 z-50 bg-white border-b">
+        <div className="sticky top-0 z-50 bg-white border-b shadow-sm">
           <Header onSearch={setSearchQuery} onTopicChange={() => {}} />
-          <div className="max-w-7xl mx-auto px-4 py-3">
-            <div className="flex space-x-3">
+          <div className="max-w-7xl mx-auto px-6 py-4">
+            <div className="flex space-x-4">
               <CategoryButton category="all" label="All" />
               <CategoryButton category="live" label="Live Now" />
               <CategoryButton category="recent" label="Recent Live" />
@@ -192,10 +192,10 @@ export function Live() {
           </div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="space-y-8">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="space-y-12">
             {getFilteredSessions().length === 0 ? (
-              <div className="text-center py-8">
+              <div className="text-center py-12">
                 <p className="text-gray-500">No sessions found matching "{searchQuery}"</p>
               </div>
             ) : (

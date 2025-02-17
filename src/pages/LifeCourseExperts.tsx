@@ -88,7 +88,7 @@ export function LifeCourseExperts() {
         <div className="flex-1 p-8 overflow-y-auto">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-8">
-              <h1 className="text-2xl font-semibold">LifeCourse Experts</h1>
+              <h1 className="text-3xl font-semibold text-gray-900">LifeCourse Experts</h1>
             </div>
 
             {/* Categories */}
@@ -99,8 +99,8 @@ export function LifeCourseExperts() {
                   onClick={() => setActiveFilter(category)}
                   className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-colors ${
                     activeFilter === category
-                      ? 'bg-[#A32E76] text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-[#a32e76] text-white'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
                   {category}
@@ -113,7 +113,7 @@ export function LifeCourseExperts() {
               {filteredExperts.map((expert, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
                 >
                   <img
                     src={expert.image}
@@ -123,7 +123,7 @@ export function LifeCourseExperts() {
                   <div className="p-4">
                     <h3 className="font-medium text-gray-900">{expert.name}</h3>
                     <p className="text-sm text-gray-600">{expert.specialization}</p>
-                    <button className="mt-3 text-[#A32E76] text-sm font-medium hover:text-[#D81B60]">
+                    <button className="mt-3 text-[#a32e76] text-sm font-medium hover:text-[#D81B60]">
                       <Link to={`/profile/${expert.id}`}>View Profile</Link>
                     </button>
                   </div>

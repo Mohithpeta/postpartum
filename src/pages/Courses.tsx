@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Play, 
@@ -9,7 +9,6 @@ import {
   ThumbsUp,
   ThumbsDown,
   ShieldCheckIcon
-
 } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Sidebar } from '../components/Sidebar';
@@ -108,11 +107,11 @@ const CoursesPage = () => {
 
               <div className="text-xs text-gray-500 mb-4">
                 By continuing you verify that you are agreeing to the terms & conditions LifeCourse.
-                <span className="text-purple-600 cursor-pointer ml-1">Learn more...</span>
+                <span className="text-[#a32e76] cursor-pointer ml-1">Learn more...</span>
               </div>
 
               <button
-                className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700"
+                className="w-full bg-[#a32e76] text-white py-3 rounded-lg hover:bg-[#922667]"
               >
                 Pay Now →
               </button>
@@ -146,18 +145,18 @@ const CoursesPage = () => {
           </button>
 
           <div className="p-6">
-            <h2 className="text-purple-600 text-xl font-medium mb-6">
+            <h2 className="text-[#a32e76] text-xl font-medium mb-6">
               Perks of Upgrading to Premium
             </h2>
 
             <div className="space-y-4 mb-6">
-              <div className="flex items-center gap-3 text-purple-600 font-medium">
+              <div className="flex items-center gap-3 text-[#a32e76] font-medium">
                 <ShieldCheckIcon size={18} className="flex-shrink-0" />
                 <p>Upgrade to Premium for ₹ 2000</p>
               </div>
               {perks.map((perk, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <ShieldCheckIcon size={18} className="text-purple-600 mt-0.5 flex-shrink-0" />
+                  <ShieldCheckIcon size={18} className="text-[#a32e76] mt-0.5 flex-shrink-0" />
                   <p className="text-gray-700 text-sm">{perk}</p>
                 </div>
               ))}
@@ -166,12 +165,12 @@ const CoursesPage = () => {
             <p className="text-xs text-gray-500 mb-6">
               By buying this course, you verify that you are neither who delivered recently or caregivers
               agree to these terms. Refunds are only available in limited circumstances according to our
-              refund policy. <span className="text-purple-600 cursor-pointer">Learn more...</span>
+              refund policy. <span className="text-[#a32e76] cursor-pointer">Learn more...</span>
             </p>
 
             <button
               onClick={() => setShowQRCode(true)}
-              className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 flex items-center justify-center gap-2"
+              className="w-full bg-[#a32e76] text-white py-3 rounded-lg hover:bg-[#922667] flex items-center justify-center gap-2"
             >
               Next <span className="text-lg" >→</span>
             </button>

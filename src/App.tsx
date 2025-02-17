@@ -3,7 +3,7 @@ import { Home } from "./pages/Home";
 import { LifeCourseExperts } from "./pages/LifeCourseExperts";
 import { Dashboard } from "./pages/Dashboard";
 import { Live } from "./pages/Live";
-import { Community } from "./pages/Community";
+import { Community } from "./components/Community/Community";
 import { Profile } from "./pages/Profile";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
@@ -18,6 +18,8 @@ import { Anemia } from "./pages/Trackers/Anemia";
 import { VideosPage } from "./pages/VideosPage";
 import CoursesPage from "./pages/Courses";
 import AuthGuard from "./components/AuthGuard";
+import { CommunityIntro } from "./components/Community/CommunityIntro";
+import GroupsList from "./components/Community/GroupsList";
 
 
 const ProtectedRoutes = () => (
@@ -43,7 +45,9 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/experts" element={<LifeCourseExperts />} />
           <Route path="/live" element={<Live />} />
-          <Route path="/community" element={<Community />} />
+          <Route path="/community/*" element={<Community />} />
+          <Route index element={<CommunityIntro />} />
+          <Route path="groups" element={<GroupsList />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/:id" element={<DoctorProfile />} />
           <Route path="/videos" element={<VideosPage />} />
