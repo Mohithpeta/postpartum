@@ -4,6 +4,7 @@ import { Header } from "../components/Header";
 import { Activity, Plus, Scale, Droplet, Stethoscope, Thermometer, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import { Outlet, Link, useLocation } from "react-router-dom";
+import { MilestoneTracker } from "./MilestoneTacker";
 
 interface HealthMetric {
   id: string;
@@ -19,6 +20,7 @@ interface HealthMetric {
 export function Trackers() {
   const location = useLocation();
   const isOverviewPage = location.pathname === "/trackers";
+  const [activeTab, setActiveTab] = useState<'health' | 'milestone'>('health');
 
   const [metrics] = useState<HealthMetric[]>([
     { id: "bp", name: "Blood Pressure", value: "120/80", unit: "mmHg", icon: <Activity className="w-6 h-6" />, lastUpdated: "2 hours ago", color: "bg-pink-100 text-pink-600", path: "/trackers/bp" },
@@ -65,6 +67,19 @@ export function Trackers() {
     </motion.button>
   );
 
+  const TabButton = ({ tab, label }: { tab: 'health' | 'milestone'; label: string }) => (
+    <button
+      onClick={() => setActiveTab(tab)}
+      className={`px-6 py-2 font-medium rounded-lg transition-colors ${
+        activeTab === tab
+          ? 'bg-purple-600 text-white'
+          : 'text-gray-600 hover:bg-purple-50'
+      }`}
+    >
+      {label}
+    </button>
+  );
+
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
@@ -75,15 +90,28 @@ export function Trackers() {
             {isOverviewPage ? (
               <>
                 <div className="flex items-center justify-between mb-8">
-                  <h1 className="text-2xl font-semibold text-gray-900">Health Trackers</h1>
-                  <button className="px-4 py-2 bg-[#A32E76] text-white rounded-lg hover:bg-[#8E2968] transition-colors text-sm font-medium">Update Metrics</button>
+                  <div className="space-x-4">
+                    <TabButton tab="health" label="Health Trackers For You" />
+                    <TabButton tab="milestone" label="Milestone Tracker For Your Baby" />
+                  </div>
                 </div>
-                <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {metrics.map((metric) => (
-                    <MetricWidget key={metric.id} metric={metric} />
-                  ))}
-                  <AddWidget />
-                </motion.div>
+
+                {activeTab === 'health' ? (
+                  <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {metrics.map((metric) => (
+                      <MetricWidget key={metric.id} metric={metric} />
+                    ))}
+                    <AddWidget />
+                  </motion.div>
+                ) : (
+                  <MilestoneTracker
+                    childName="Krish"
+                    childAge="1 week old"
+                    weekNumber={1}
+                    milestonesAnswered={2}
+                    totalMilestones={11}
+                  />
+                )}
               </>
             ) : (
               <Outlet />
