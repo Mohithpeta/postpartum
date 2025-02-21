@@ -6,27 +6,32 @@ import { Button } from '../components/Button';
 import axios from 'axios';
 
 export function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
     try {
+      const apiBase = process.env.NODE_ENV === 'development'
+        ? 'http://127.0.0.1:8000'
+        : 'https://deepvital-backend.onrender.com';
+
       const response = await axios.post(
-        'http://127.0.0.1:8000/auth/login/user',
+        `${apiBase}/auth/login/user`,
         { email, password },
         { headers: { 'Content-Type': 'application/json' } }
       );
 
       const data = response.data;
       localStorage.setItem('token', data.access_token);
-      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('user_id', data.user.id); // Store user_id specifically, not the entire user object
+      localStorage.setItem('user', JSON.stringify(data.user)); // Optionally store the full user object if needed
 
       navigate('/home'); // Redirect to home page after successful login
     } catch (err: unknown) {

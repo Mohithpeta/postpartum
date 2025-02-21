@@ -4,7 +4,7 @@ import { Header } from "../components/Header";
 import { Activity, Plus, Scale, Droplet, Stethoscope, Thermometer, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import { Outlet, Link, useLocation } from "react-router-dom";
-import { MilestoneTracker } from "./MilestoneTracker";
+import  MilestoneTracker  from "./MilestoneTracker";
 
 interface HealthMetric {
   id: string;

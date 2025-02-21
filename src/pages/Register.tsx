@@ -45,17 +45,21 @@ export function Register() {
     setStep((prev) => (prev < 4 ? (prev + 1) as Step : prev));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-
+  
     if (step < 4) {
       handleNext();
     } else {
       try {
-        const response = await axios.post("http://localhost:8000/auth/signup/user", formData, {
+        const apiBase = process.env.NODE_ENV === 'development'
+          ? 'http://127.0.0.1:8000'
+          : 'https://deepvital-backend.onrender.com';
+  
+        const response = await axios.post(`${apiBase}/auth/signup/user`, formData, {
           headers: { 'Content-Type': 'application/json' },
         });
-
+  
         console.log('User signed up:', response.data);
         setStep(5);
         setTimeout(() => {
@@ -63,6 +67,11 @@ export function Register() {
         }, 3000);
       } catch (error) {
         console.error('Error during signup:', error);
+        if (axios.isAxiosError(error)) {
+          Error(error.response?.data?.detail || 'An error occurred during signup. Please try again.');
+        } else {
+          Error('An unexpected error occurred. Please try again.');
+        }
       }
     }
   };

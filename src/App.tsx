@@ -18,7 +18,7 @@ import { Anemia } from "./pages/Trackers/Anemia";
 import { VideosPage } from "./pages/VideosPage";
 import CoursesPage from "./pages/Courses";
 import AuthGuard from "./components/AuthGuard";
-import MilestoneChecklist from "./pages/Trackers/MileStoneCheckList";
+import { MilestoneChecklist } from "./pages/Trackers/MileStoneCheckList";
 // import { CommunityIntro } from "./components/Community/CommunityIntro";
 // import GroupsList from "./components/Community/GroupsList";
 
