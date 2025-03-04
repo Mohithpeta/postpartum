@@ -1,6 +1,6 @@
 import React from 'react';
 import { Calendar, ChevronRight, ChevronDown, Heart, HelpCircle, Lightbulb } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface MilestoneProps {
   childName: string;
@@ -95,7 +95,7 @@ export const MilestoneTracker: React.FC<MilestoneProps> = ({
               </div>
               <div>
               <h3 className="font-medium">Milestone Summary</h3>
-              <button className="text-blue-600 text-sm mt-1">View Summary</button>
+              <button className="text-blue-600 text-sm mt-1"> <Link to="/trackers/milestone-summary">View Summary</Link></button>
               </div>
             </div>
 
@@ -106,7 +106,7 @@ export const MilestoneTracker: React.FC<MilestoneProps> = ({
               </div>
               <div>
               <h3 className="font-medium">Expert Tips & Guidance</h3>
-              <button className="text-pink-600 text-sm mt-1">View Tips & Guidance</button>
+              <button className="text-pink-600 text-sm mt-1"><Link to="/trackers/expert-tips-guidance">View Tips & Guidance</Link></button>
               </div>
             </div>
 
@@ -117,7 +117,7 @@ export const MilestoneTracker: React.FC<MilestoneProps> = ({
               </div>
               <div>
               <h3 className="font-medium">Nutrition</h3>
-              <button className="text-purple-600 text-sm mt-1">View Nutrition</button>
+              <button className="text-purple-600 text-sm mt-1"><Link to="/trackers/nutrition">View Nutrition</Link></button>
               </div>
             </div>
 

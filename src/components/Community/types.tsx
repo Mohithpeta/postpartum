@@ -1,8 +1,7 @@
 export interface Group {
     name: string;
-    members: number;
-    description: string;
     category: string;
+    image: string;
   }
   
   export interface SearchFilters {

@@ -1,74 +1,94 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import { Sidebar } from '../Sidebar';
-import { Header } from '../Header';
-import GroupsList from './GroupsList';
-import { useState } from 'react';
-import { Group } from './types';
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { Sidebar } from "../Sidebar";
+import { Header } from "../Header";
+import GroupsList from "./GroupsList";
+
+import { Group } from "./types";
+import { FiMoreVertical } from "react-icons/fi"; // Icon for menu
+import { FaArrowRight } from "react-icons/fa"; // Arrow icon
 
 export function Community() {
   const navigate = useNavigate();
-  const [searchQuery] = useState('');
-  const [selectedTopic, setSelectedTopic] = useState('All');
 
   const groups: Group[] = [
     {
-      name: 'Postpartum Hypertension',
-      members: 156,
-      description: 'Join the Postpartum Hypertension Community to connect with experts and peers.',
-      category: 'Hypertension',
+      name: "Community Meetup",
+      category: "Hypertension",
+      image: "src/assets/1.png",
     },
     {
-      name: 'Pregnancy Care',
-      members: 200,
-      description: 'A community for pregnant mothers to discuss health and wellness topics.',
-      category: 'Pregnancy',
+      name: "Pregnancy Care",
+      category: "",
+      image: "src/assets/3.png",
     },
-    // Add more groups here...
+    {
+      name: "Pregnancy Care",
+      category: "",
+      image: "../../assets/3.png",
+    },
+    {
+      name: "Pregnancy Care",
+      category: "",
+      image: "src/assets/3.png",
+    },
+    {
+      name: "Pregnancy Care",
+      category: "",
+      image: "src/assets/3.png",
+    },
   ];
-
-  // Filtering groups based on search query and selected topic
-  const filteredGroups = groups.filter(group => {
-    const matchesSearch = group.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTopic = selectedTopic === 'All' || group.category === selectedTopic;
-    return matchesSearch && matchesTopic;
-  });
 
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
       <main className="flex-1 flex flex-col overflow-hidden">
-        <Header onTopicChange={setSelectedTopic} />
+        <Header onTopicChange={(topic: string) => console.log(topic)} />
         <div className="flex-1 px-8 py-12 overflow-y-auto">
           <div className="max-w-7xl mx-auto">
+            <h1 className="text-3xl font-bold mb-8 text-[#a32e76]">Community for you</h1>
             <Routes>
               <Route
                 index
                 element={
                   <div className="flex justify-start">
-                    <div className="bg-white rounded-lg shadow-md p-8 max-w-2xl w-full">
-                      <h2 className="text-2xl font-bold mb-8 text-[#a32e76]">
-                        Lifecourse Hypertension Care
-                      </h2>
-                      <p className="text-gray-600 mb-6">
-                        Join our community dedicated to supporting individuals managing hypertension 
-                        throughout different life stages. Connect with experts, share experiences, 
-                        and access valuable resources.
-                      </p>
-                      <button
-                        onClick={() => navigate('/community/groups')}
-                        className="px-6 py-3 bg-[#a32e76] text-white font-medium rounded-full 
-                                     hover:bg-[#8e2968] transition-colors"
-                      >
-                        Join Community
-                      </button>
+                    <div className="bg-white rounded-lg shadow-lg p-4 w-[500px] flex border border-gray-200 relative">
+                      {/* Community Image */}
+                      <img
+                        src="src/assets/2.png"
+                        alt="Community"
+                        className="rounded-lg object-cover w-[100px] h-[100px] mr-4"
+                      />
+
+                      {/* Community Details */}
+                      <div className="flex-1">
+                        {/* Menu Icon */}
+                        <button className="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+                          <FiMoreVertical size={20} />
+                        </button>
+
+                        <h2 className="text-lg font-bold text-gray-900">LifeCourse Hypertension Care</h2>
+                        <p className="text-gray-600 text-sm font-medium">156 Members</p>
+
+                        <p className="text-gray-600 text-sm mt-2 leading-relaxed">
+                          Join the Postpartum Hypertension Community to connect with experts and peers, access tailored
+                          resources, and prepare for a healthy pregnancy journey.
+                        </p>
+
+                        {/* Join Button */}
+                        <button
+                          onClick={() => navigate("/community/groups")}
+                          className="mt-4 flex items-center justify-center px-4 py-1 border-2 border-[#a32e76] 
+                                   text-[#a32e76] font-medium rounded-full hover:bg-[#a32e76] hover:text-white 
+                                   transition-colors text-sm"
+                        >
+                          Join Community <FaArrowRight className="ml-2" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 }
               />
-              <Route
-                path="groups"
-                element={<GroupsList groups={filteredGroups} />}
-              />
+              <Route path="groups" element={<GroupsList groups={groups} />} />
             </Routes>
           </div>
         </div>

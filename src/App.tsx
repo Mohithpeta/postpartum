@@ -19,6 +19,9 @@ import { VideosPage } from "./pages/VideosPage";
 import CoursesPage from "./pages/Courses";
 import AuthGuard from "./components/AuthGuard";
 import { MilestoneChecklist } from "./pages/Trackers/MileStoneCheckList";
+import { MilestoneSummary } from "./pages/MilestoneTrackers/MilestoneSummary"
+import Nutrition from "./pages/MilestoneTrackers/Nutrition";
+import ExpertTipsGuidance from "./pages/MilestoneTrackers/ExpertTipsGuidance";
 // import { CommunityIntro } from "./components/Community/CommunityIntro";
 // import GroupsList from "./components/Community/GroupsList";
 
@@ -65,6 +68,9 @@ function App() {
             <Route path="blood-glucose" element={<BloodGlucose />} />
             <Route path="anemia" element={<Anemia />} />
             <Route path="milestone-checklist" element={<MilestoneChecklist />} />
+            <Route path="milestone-summary" element={<MilestoneSummary />} />
+            <Route path="nutrition" element={<Nutrition />} />
+            <Route path="expert-tips-guidance" element={<ExpertTipsGuidance />} />
           </Route>
         </Route>
 

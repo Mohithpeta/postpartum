@@ -26,18 +26,18 @@ interface Video {
   youtube_url: string;
 }
 
-const getYouTubeVideoID = (url: string): string | null => {
-  try {
-    const parsedUrl = new URL(url);
-    if (parsedUrl.hostname.includes("youtu.be")) {
-      return parsedUrl.pathname.substring(1);
-    }
-    return parsedUrl.searchParams.get("v");
-  } catch {
-    console.error("Invalid YouTube URL:", url);
-    return null;
-  }
-};
+// const getYouTubeVideoID = (url: string): string | null => {
+//   try {
+//     const parsedUrl = new URL(url);
+//     if (parsedUrl.hostname.includes("youtu.be")) {
+//       return parsedUrl.pathname.substring(1);
+//     }
+//     return parsedUrl.searchParams.get("v");
+//   } catch {
+//     console.error("Invalid YouTube URL:", url);
+//     return null;
+//   }
+// };
 
 export function VideosPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -231,9 +231,7 @@ export function VideosPage() {
                           controls={false}
                           className="rounded-lg overflow-hidden"
                           config={{
-                            youtube: {
-                              playerVars: { modestbranding: 1, rel: 0 },
-                            },
+                            playerVars: { modestbranding: 1, rel: 0 },
                           }}
                         />
                       </div>
