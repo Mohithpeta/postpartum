@@ -128,7 +128,7 @@ export const MilestoneTracker: React.FC<MilestoneProps> = ({
               </div>
               <div>
               <h3 className="font-medium">Common FAQ's</h3>
-              <button className="text-yellow-600 text-sm mt-1">View FAQ's</button>
+              <button className="text-yellow-600 text-sm mt-1"><Link to="/trackers/faq">View FAQ's</Link></button>
             </div>
             </div>
           </div>
