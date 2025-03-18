@@ -6,6 +6,11 @@ import GroupsList from "./GroupsList";
 import { Group } from "./types";
 import { FiMoreVertical } from "react-icons/fi"; // Icon for menu
 import { FaArrowRight } from "react-icons/fa"; // Arrow icon
+import logo1 from "../../assets/1.png";
+import logo2 from "../../assets/2.png";
+import logo3 from "../../assets/3.png";
+import logo4 from "../../assets/4.png";
+import logo5 from "../../assets/5.png";
 
 export function Community() {
   const navigate = useNavigate();
@@ -14,27 +19,27 @@ export function Community() {
     {
       name: "Community Meetup",
       category: "Hypertension",
-      image: "src/assets/1.png",
+      image: logo1,
     },
     {
       name: "Pregnancy Care",
       category: "",
-      image: "src/assets/3.png",
+      image: logo2,
     },
     {
       name: "Pregnancy Care",
       category: "",
-      image: "../../assets/3.png",
+      image: logo3,
     },
     {
       name: "Pregnancy Care",
       category: "",
-      image: "src/assets/3.png",
+      image: logo4,
     },
     {
       name: "Pregnancy Care",
       category: "",
-      image: "src/assets/3.png",
+      image: logo5,
     },
   ];
 
