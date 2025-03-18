@@ -23,6 +23,8 @@ import { MilestoneSummary } from "./pages/MilestoneTrackers/MilestoneSummary"
 import Nutrition from "./pages/MilestoneTrackers/Nutrition";
 import ExpertTipsGuidance from "./pages/MilestoneTrackers/ExpertTipsGuidance";
 import FAQ from "./pages/MilestoneTrackers/FAQ";
+import { useEffect, useState } from "react";
+import { HomeOnboarding } from "./pages/HomeOnBoarding";
 // import { CommunityIntro } from "./components/Community/CommunityIntro";
 // import GroupsList from "./components/Community/GroupsList";
 
@@ -34,6 +36,15 @@ const ProtectedRoutes = () => (
 );
 
 function App() {
+  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
+  
+  // Check if user has completed onboarding
+  useEffect(() => {
+    const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+    if (onboardingCompleted === 'true') {
+      setHasCompletedOnboarding(true);
+    }
+  }, []);
   return (
     <BrowserRouter>
       <Routes>
@@ -46,6 +57,8 @@ function App() {
 
         {/* 🔹 Protected Routes (Requires Authentication) */}
         <Route element={<ProtectedRoutes />}>
+          <Route path="/" element={<Navigate to={hasCompletedOnboarding ? "/home" : "/onboarding"} />} />
+          <Route path="/onboarding" element={<HomeOnboarding />} />
           <Route path="/home" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/experts" element={<LifeCourseExperts />} />

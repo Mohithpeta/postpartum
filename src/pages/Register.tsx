@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthLayout } from '../components/AuthLayout';
-import { Input } from '../components/Input';
+// import { Input } from '../components/Input';
 import { Button } from '../components/Button';
-import { CheckCircle, Info } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import { cn } from '../utils/cn';
 import axios from 'axios';
-
-type Step = 1 | 2 | 3 | 4 | 5;
+import LifeCourseLogo  from '../assets/Lifecourse Logo.png';
+type Step = 1 | 2 | 3 | 4 | 5 | 6;
 
 type Condition = {
   name: string;
@@ -25,6 +25,10 @@ export function Register() {
     name: '',
     phone: '',
     deliveryStatus: '',
+    documentType: '',
+    deliveryType: '',
+    babyBirthDate: '',
+    hypertensionStage: '',
     role: 'user',
   });
 
@@ -41,14 +45,32 @@ export function Register() {
     { name: 'Anal Incontinence', info: 'Involuntary passing of gas/stool, Constipation, Bloating, Hemorrhoids/Piles.' }
   ];
 
+  const hypertensionOptions = [
+    'To know about Hypertension',
+    'Lifestyle Changes to Control Hypertension',
+    'Diagnosed Hypertension',
+    'Having symptoms of Hypertension',
+    'Managing Hypertension Through Diet and Nutrition',
+    'Exercises Safe for Hypertension Recovery',
+    'Others'
+  ];
+
   const handleNext = () => {
-    setStep((prev) => (prev < 4 ? (prev + 1) as Step : prev));
+    setStep((prev) => {
+      if (prev === 4 && selectedConditions.includes('Hypertension')) {
+        return 5; // Add hypertension stage screen for users who selected hypertension
+      } else if (prev === 4 || prev === 5) {
+        return 6; // Final success screen
+      } else {
+        return (prev + 1) as Step;
+      }
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
   
-    if (step < 4) {
+    if (step < 6) {
       handleNext();
     } else {
       try {
@@ -56,12 +78,15 @@ export function Register() {
           ? 'http://127.0.0.1:8000'
           : 'https://deepvital-backend.onrender.com';
   
-        const response = await axios.post(`${apiBase}/auth/signup/user`, formData, {
+        const response = await axios.post(`${apiBase}/auth/signup/user`, {
+          ...formData,
+          selectedConditions
+        }, {
           headers: { 'Content-Type': 'application/json' },
         });
   
         console.log('User signed up:', response.data);
-        setStep(5);
+        // Registration successful, redirect to login after delay
         setTimeout(() => {
           navigate('/login');
         }, 3000);
@@ -75,6 +100,7 @@ export function Register() {
       }
     }
   };
+
   const toggleCondition = (conditionName: string) => {
     setSelectedConditions((prev) =>
       prev.includes(conditionName)
@@ -83,169 +109,364 @@ export function Register() {
     );
   };
 
+  const toggleHypertensionStage = (stage: string) => {
+    setFormData({...formData, hypertensionStage: 
+      formData.hypertensionStage === stage ? '' : stage
+    });
+  };
+
   return (
     <AuthLayout>
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl border-2 border-[#A32E76]">
-        {step < 5 ? (
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
+        {/* Logo */}
+        <div className="absolute top-8 left-8">
+            <Link to="/">
+            <div className="flex items-center">
+              <div className="flex">
+              <div className="text-[#5E17EB] font-bold text-2xl">
+                <span className="inline-flex items-center">
+                <img src={LifeCourseLogo} alt="LifeCourse Logo" width="auto" height="auto" />
+                <span className="ml-1"></span>
+                <sup className="text-xs">®</sup>
+                </span>
+              </div>
+              </div>
+            </div>
+            </Link>
+        </div>
+
+        {step === 6 ? (
+          // Success Screen
+          <div className="text-center py-12">
+            <div className="mb-4">
+              <div className="w-20 h-20 mx-auto bg-[#5E17EB] rounded-md flex items-center justify-center">
+                <CheckCircle className="h-12 w-12 text-white" />
+              </div>
+            </div>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Registered Successfully</h2>
+            <Link to="/login" className="block w-full text-center bg-[#5E17EB] hover:bg-[#4b12c9] text-white py-3 px-4 rounded-md font-medium">
+              Go to Login
+            </Link>
+          </div>
+        ) : (
           <>
             {/* Progress Bar */}
-            <div className="mb-8">
+            <div className="mb-10 mt-16">
               <div className="flex justify-between items-center mb-2">
                 {[1, 2, 3, 4].map((s) => (
                   <div
                     key={s}
                     className={cn(
-                      'h-2 flex-1 rounded-full',
-                      s <= step ? 'bg-[#A32E76]' : 'bg-gray-200',
+                      'h-1 flex-1 rounded-full',
+                      s <= step ? 'bg-[#5E17EB]' : 'bg-gray-200',
                       s !== 4 && 'mr-2'
                     )}
                   />
                 ))}
               </div>
-              <p className="text-sm text-center text-gray-500">Step {step} of 4</p>
             </div>
 
+            {/* Header text */}
+            {step === 1 ? (
+              <div className="text-center mb-8">
+                <h2 className="text-xl font-medium text-gray-800">Welcome To LifeCourse!</h2>
+                <p className="text-gray-600">To begin the Journey, SignUp!</p>
+              </div>
+            ) : (
+              <div className="text-center mb-8">
+                <h2 className="text-xl font-medium text-gray-800">Let Lifecourse Know about You;</h2>
+                <p className="text-gray-600">You'll know everything through the course</p>
+              </div>
+            )}
+
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               {step === 1 && (
                 <>
-                  <h2 className="text-2xl font-semibold text-center text-[#A32E76] mb-6">
-                    Welcome to LifeCourse!
-                  </h2>
-                  <Input
-                    label="Email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                  />
-                  <Input
-                    label="Password"
-                    type="password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    required
-                  />
-                  <Button variant="google" fullWidth className="mt-4 border-[#A32E76] text-[#A32E76]">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
-                         alt="Google" 
-                         className="w-5 h-5 mr-2" />
-                    Continue with Google
-                  </Button>
-                  <p className="text-center text-sm mt-4">
-                    Already have an account?{' '}
-                    <Link to="/login" className="text-[#A32E76] hover:text-[#871c5b]">Login</Link>
-                  </p>
+                  <div className="space-y-4">
+                    <Button variant="google" fullWidth className="border border-gray-300 bg-white text-gray-800 py-3">
+                      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
+                           alt="Google" 
+                           className="w-5 h-5 mr-2" />
+                      Continue with Google
+                    </Button>
+                    
+                    <div className="flex items-center">
+                      <div className="flex-1 h-px bg-gray-300"></div>
+                      <span className="px-4 text-sm text-gray-500">or</span>
+                      <div className="flex-1 h-px bg-gray-300"></div>
+                    </div>
+                    
+                    <div>
+                      <input
+                        type="email"
+                        placeholder="Enter E-mail id"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#5E17EB]"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="relative">
+                      <input
+                        type="password"
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#5E17EB]"
+                        required
+                      />
+                      <button 
+                        type="button"
+                        className="absolute right-3 top-3 text-gray-400"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                          <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                      </button>
+                    </div>
+                    
+                    <Button type="submit" fullWidth className="bg-[#5E17EB] hover:bg-[#4b12c9] text-white py-3">
+                      Sign Up →
+                    </Button>
+                    
+                    <p className="text-center text-sm mt-4">
+                      Already have an account?{' '}
+                      <Link to="/login" className="text-[#5E17EB] hover:text-[#4b12c9] font-medium">Login</Link>
+                    </p>
+                  </div>
                 </>
               )}
 
               {step === 2 && (
                 <>
-                  <h2 className="text-2xl font-semibold text-center text-[#A32E76] mb-6">Personal Information</h2>
-                  <Input
-                    label="Full Name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                  />
-                  <Input
-                    label="Phone Number"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    required
-                  />
-                  <label className="block">
-                    <span className="text-[#A32E76] font-medium">
-                      Have you delivered a baby in the past 6 months or are you a caretaker?
-                    </span>
-                    <select
-                      value={formData.deliveryStatus}
-                      onChange={(e) => setFormData({ ...formData, deliveryStatus: e.target.value })}
-                      className="mt-2 block w-full rounded-md border border-[#A32E76] bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#A32E76] focus:ring-opacity-50 text-lg py-2 px-2"
-                      required
-                    >
-                      <option value="" disabled>Select an option</option>
-                      <option value="postpartum">Postpartum</option>
-                      <option value="preconception">Preconception</option>
-                      <option value="pregnancy">Pregnancy</option>
-                    </select>
-                  </label>
+                  <div className="space-y-5">
+                    <div>
+                      <label className="block text-gray-700 mb-1">Name</label>
+                      <input
+                        type="text"
+                        placeholder="Enter Name"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#5E17EB]"
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-gray-700 mb-1">Mobile Number</label>
+                      <div className="flex">
+                        <span className="inline-flex items-center px-3 py-3 text-gray-500 bg-gray-100 border border-r-0 border-gray-300 rounded-l-md">
+                          +91
+                        </span>
+                        <input
+                          type="tel"
+                          placeholder="Enter Mobile Number"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          className="flex-1 px-4 py-3 border border-gray-300 rounded-r-md focus:outline-none focus:ring-1 focus:ring-[#5E17EB]"
+                          required
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-gray-700 mb-1">
+                        Have you delivered a baby within the past 6 months? / Are you a caretaker
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={formData.deliveryStatus}
+                          onChange={(e) => setFormData({ ...formData, deliveryStatus: e.target.value })}
+                          className="appearance-none w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#5E17EB]"
+                          required
+                        >
+                          <option value="" disabled>Select</option>
+                          <option value="postpartum">Postpartum</option>
+                          <option value="preconception">Preconception</option>
+                          <option value="pregnancy">Pregnancy</option>
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                          <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="pt-4">
+                      <Button type="submit" fullWidth className="bg-[#5E17EB] hover:bg-[#4b12c9] text-white py-3">
+                        Next →
+                      </Button>
+                    </div>
+                  </div>
                 </>
               )}
 
               {step === 3 && (
                 <>
-                  <h2 className="text-2xl font-semibold text-center text-[#A32E76] mb-6">Document Upload</h2>
-                  {/* Commented out the file upload input */}
-                  {/* <Input
-                    type="file"
-                    accept=".pdf,.jpg,.jpeg,.png"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0] || null;
-                      setFormData({ ...formData, birthCertificate: file });
-                    }}
-                    required
-                  /> */}
+                  <div className="space-y-5">
+                    <div>
+                      <label className="block text-gray-700 mb-1">
+                        Please Choose one of the following documents for verification:
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={formData.documentType}
+                          onChange={(e) => setFormData({ ...formData, documentType: e.target.value })}
+                          className="appearance-none w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#5E17EB]"
+                          required
+                        >
+                          <option value="" disabled>Select</option>
+                          <option value="birthCertificate">Birth Certificate</option>
+                          <option value="prescriptionLetter">Doctor's Prescription</option>
+                          <option value="hospitalRecord">Hospital Record</option>
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                          <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="absolute right-12 top-52">
+                        <div className="flex items-center justify-center rounded-full w-6 h-6 bg-[#FF3B8B] text-white text-xs font-bold">
+                          D
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-gray-700 mb-1">
+                        Upload Birth Certificate
+                      </label>
+                      <div className="flex">
+                        <button
+                          type="button"
+                          className="w-full flex items-center justify-between px-4 py-3 border border-gray-300 rounded-md bg-white hover:bg-gray-50"
+                        >
+                          <span className="text-gray-500">Upload</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                          </svg>
+                        </button>
+                      </div>
+                      <div className="absolute right-12 top-80">
+                        <div className="flex items-center justify-center rounded-full w-6 h-6 bg-[#FF3B8B] text-white text-xs font-bold">
+                          D
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="text-right pt-8">
+                      <Button type="submit" className="bg-[#5E17EB] hover:bg-[#4b12c9] text-white py-2 px-6 rounded-md">
+                        Next →
+                      </Button>
+                    </div>
+                  </div>
                 </>
               )}
 
               {step === 4 && (
                 <>
-                  <p className="text-xl  text-center  mb-6">
-                    Choose from below eleven that why are you here (This will help us to provide curated healthcare content for you)
-                  </p>
-                  <div className="grid grid-cols-2 gap-4">
-                    {conditions.map((condition) => (
-                      <div key={condition.name} className="relative">
-                        {/* Condition Select Box */}
-                        <label className="flex items-center gap-2 p-3 rounded-lg border w-full cursor-pointer hover:bg-[#A32E76]/10 border-[#A32E76]">
-                          <input
-                            type="checkbox"
-                            checked={selectedConditions.includes(condition.name)}
-                            onChange={() => toggleCondition(condition.name)}
-                            className="form-checkbox h-4 w-4 text-[#A32E76] rounded"
-                          />
-                          {condition.name}
-                        </label>
-
-                        {/* Info Icon */}
-                        <span
-                          onClick={() => setActiveInfo(activeInfo === condition.name ? null : condition.name)}
-                          className="absolute right-3 top-3 text-[#A32E76] hover:text-[#871c5b] cursor-pointer"
-                        >
-                          <Info size={16} />
-                        </span>
-
-                        {/* Info Popup */}
-                        {activeInfo === condition.name && (
-                          <div className="absolute z-10 mt-2 p-3 bg-white rounded-lg shadow-lg border border-[#A32E76] text-sm">
-                            {condition.info}
-                          </div>
-                        )}
-                      </div>
-                    ))}
+                  <div>
+                    <p className="text-gray-700 mb-5">
+                      Choose from below options that why are you Here (This will help us to provide curated healthcare content for you)
+                    </p>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      {conditions.slice(0, 10).map((condition) => (
+                        <div key={condition.name} className="relative">
+                          <label className="flex items-center p-3 rounded-md border border-gray-300 hover:border-[#5E17EB]/70 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={selectedConditions.includes(condition.name)}
+                              onChange={() => toggleCondition(condition.name)}
+                              className="form-checkbox h-4 w-4 text-[#5E17EB] border-gray-300 rounded"
+                            />
+                            <span className="ml-2 text-sm">{condition.name}</span>
+                          </label>
+                          
+                          <button
+                            type="button"
+                            onClick={() => setActiveInfo(activeInfo === condition.name ? null : condition.name)}
+                            className="absolute right-3 top-3 text-[#5E17EB]"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <circle cx="12" cy="12" r="10"></circle>
+                              <line x1="12" y1="16" x2="12" y2="12"></line>
+                              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                          </button>
+                          
+                          {activeInfo === condition.name && (
+                            <div className="absolute z-10 right-0 top-full mt-2 p-3 bg-white rounded-lg shadow-lg border border-gray-200 w-72 text-sm">
+                              <div className="flex justify-between items-center mb-1">
+                                <p className="text-sm font-medium">Choose {condition.name} if have the combinations of the symptoms given below:</p>
+                                <button 
+                                  type="button" 
+                                  onClick={() => setActiveInfo(null)}
+                                  className="text-gray-500 hover:text-gray-700"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                  </svg>
+                                </button>
+                              </div>
+                              <p className="text-gray-600">{condition.info}</p>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="text-right pt-8">
+                      <Button type="submit" className="bg-[#5E17EB] hover:bg-[#4b12c9] text-white py-2 px-6 rounded-md">
+                        Next →
+                      </Button>
+                    </div>
                   </div>
                 </>
               )}
 
-              <Button type="submit" fullWidth className="bg-[#A32E76] hover:bg-[#871c5b] text-white">
-                {step === 4 ? 'Complete Registration' : 'Next'}
-              </Button>
+              {step === 5 && (
+                <>
+                  <div>
+                    <p className="text-gray-700 mb-5">
+                      In which stage are you in hypertension? This will help us to provide curated healthcare content for you
+                    </p>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      {hypertensionOptions.map((option) => (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => toggleHypertensionStage(option)}
+                          className={`p-3 rounded-md text-center text-sm ${
+                            formData.hypertensionStage === option
+                              ? 'bg-[#5E17EB] text-white'
+                              : 'bg-[#5E17EB]/10 text-[#5E17EB] hover:bg-[#5E17EB]/20'
+                          }`}
+                        >
+                          {option}
+                        </button>
+                      ))}
+                    </div>
+                    
+                    <div className="text-right pt-8">
+                      <Button type="submit" className="bg-[#5E17EB] hover:bg-[#4b12c9] text-white py-2 px-6 rounded-md">
+                        Submit →
+                      </Button>
+                    </div>
+                  </div>
+                </>
+              )}
             </form>
           </>
-        ) : (
-          // Success Screen (Step 5)
-          <div className="text-center">
-            <CheckCircle className="h-16 w-16 text-[#A32E76]" />
-            <h2 className="text-2xl font-semibold text-[#A32E76] mb-2">Registration Completed!</h2>
-            <p className="text-gray-600 mb-6">
-              Your account is being processed. Verification may take up to 24 hours.
-            </p>
-            <Link to="/login" className="block w-full text-center bg-[#A32E76] hover:bg-[#871c5b] text-white py-2 rounded-lg">
-              Back to Login
-            </Link>
-          </div>
         )}
       </div>
     </AuthLayout>
