@@ -59,7 +59,7 @@ export function Community() {
                     <div className="bg-white rounded-lg shadow-lg p-4 w-[500px] flex border border-gray-200 relative">
                       {/* Community Image */}
                       <img
-                        src="src/assets/2.png"
+                        src={logo2}
                         alt="Community"
                         className="rounded-lg object-cover w-[100px] h-[100px] mr-4"
                       />
