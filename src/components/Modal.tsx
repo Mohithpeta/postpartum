@@ -1,5 +1,12 @@
 
-export function Modal({ title, children, onClose, onSave }: any) {
+interface ModalProps {
+  title: string;
+  children: React.ReactNode;
+  onClose: () => void;
+  onSave: () => void;
+}
+
+export function Modal({ title, children, onClose, onSave }: ModalProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
@@ -14,7 +21,7 @@ export function Modal({ title, children, onClose, onSave }: any) {
           </button>
           <button
             onClick={onSave}
-            className="px-4 py-2 bg-[#A32E76] text-white rounded-md"
+            className="px-4 py-2 bg-[#5E17EB] text-white rounded-md"
           >
             Save Changes
           </button>

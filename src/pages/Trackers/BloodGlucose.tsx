@@ -158,7 +158,7 @@ export function BloodGlucose() {
                   type="number"
                   value={formData.glucoseLevel}
                   onChange={(e) => setFormData({ ...formData, glucoseLevel: e.target.value })}
-                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                   placeholder="20-600 mg/dL"
                 />
                 {errors.glucoseLevel && (
@@ -176,7 +176,7 @@ export function BloodGlucose() {
                     ...formData, 
                     mealContext: e.target.value as GlucoseReading['mealContext']
                   })}
-                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                 >
                   <option value="fasting">Fasting</option>
                   <option value="before_meal">Before Meal</option>
@@ -193,7 +193,7 @@ export function BloodGlucose() {
                   type="datetime-local"
                   value={formData.timestamp}
                   onChange={(e) => setFormData({ ...formData, timestamp: e.target.value })}
-                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                 />
                 {errors.timestamp && (
                   <p className="text-red-500 text-sm mt-1">{errors.timestamp}</p>
@@ -202,7 +202,7 @@ export function BloodGlucose() {
 
               <button
                 type="submit"
-                className="w-full bg-[#A32E76] text-white py-2 rounded-md hover:bg-[#8E2968] transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-[#5E17EB] text-white py-2 rounded-md hover:bg-[#8E2968] transition-colors flex items-center justify-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 Add Reading
@@ -223,7 +223,7 @@ export function BloodGlucose() {
                     type="date"
                     value={fromDate}
                     onChange={(e) => setFromDate(e.target.value)}
-                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                   />
                 </div>
                 <div className="flex flex-col">
@@ -232,7 +232,7 @@ export function BloodGlucose() {
                     type="date"
                     value={toDate}
                     onChange={(e) => setToDate(e.target.value)}
-                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                   />
                 </div>
                 <button

@@ -50,7 +50,7 @@ export function Community() {
         <Header onTopicChange={(topic: string) => console.log(topic)} />
         <div className="flex-1 px-8 py-12 overflow-y-auto">
           <div className="max-w-7xl mx-auto">
-            <h1 className="text-3xl font-bold mb-8 text-[#a32e76]">Community for you</h1>
+            <h1 className="text-3xl font-bold mb-8 text-[#5e17eb]">Community for you</h1>
             <Routes>
               <Route
                 index
@@ -82,8 +82,8 @@ export function Community() {
                         {/* Join Button */}
                         <button
                           onClick={() => navigate("/community/groups")}
-                          className="mt-4 flex items-center justify-center px-4 py-1 border-2 border-[#a32e76] 
-                                   text-[#a32e76] font-medium rounded-full hover:bg-[#a32e76] hover:text-white 
+                          className="mt-4 flex items-center justify-center px-4 py-1 border-2 border-[#5e17eb] 
+                                   text-[#5e17eb] font-medium rounded-full hover:bg-[#5e17eb] hover:text-white 
                                    transition-colors text-sm"
                         >
                           Join Community <FaArrowRight className="ml-2" />

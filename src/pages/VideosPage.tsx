@@ -26,19 +26,6 @@ interface Video {
   youtube_url: string;
 }
 
-// const getYouTubeVideoID = (url: string): string | null => {
-//   try {
-//     const parsedUrl = new URL(url);
-//     if (parsedUrl.hostname.includes("youtu.be")) {
-//       return parsedUrl.pathname.substring(1);
-//     }
-//     return parsedUrl.searchParams.get("v");
-//   } catch {
-//     console.error("Invalid YouTube URL:", url);
-//     return null;
-//   }
-// };
-
 export function VideosPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeFilter, setActiveFilter] = useState<string>('All');
@@ -200,7 +187,7 @@ export function VideosPage() {
                   onClick={() => setActiveFilter(category)}
                   className={`px-3 py-1 text-sm font-medium rounded-full whitespace-nowrap transition-colors ${
                     activeFilter === category
-                      ? 'bg-[#a32e76] text-white'
+                      ? 'bg-[#5e17eb] text-white'
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
@@ -246,7 +233,7 @@ export function VideosPage() {
                           <span>{activeVideo.views} Views</span>
                           <span>{new Date(activeVideo.upload_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                           <span className="flex items-center">
-                            <svg className="w-4 h-4 mr-1 text-[#a32e76]" fill="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 mr-1 text-[#5e17eb]" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
                             </svg>
                             {activeVideo.likes || 0} Likes
@@ -261,21 +248,21 @@ export function VideosPage() {
                           />
                           <span className="text-sm text-gray-700">{activeVideo.doctor?.name || 'Unknown'}</span>
                           {activeVideo.doctor?.verified && (
-                            <svg className="w-4 h-4 text-[#a32e76]" fill="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 text-[#5e17eb]" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                             </svg>
                           )}
-                          <button className="ml-2 text-sm text-[#a32e76] hover:text-[#8a2663]">Following</button>
-                          <button className="ml-2 text-sm text-[#a32e76] hover:text-[#8a2663]">Follow</button>
+                          <button className="ml-2 text-sm text-[#5e17eb] hover:text-[#4b13b8]">Following</button>
+                          <button className="ml-2 text-sm text-[#5e17eb] hover:text-[#4b13b8]">Follow</button>
                         </div>
                         <div className="flex items-center space-x-2 mb-2">
-                          <button className="text-sm text-[#a32e76] hover:text-[#8a2663] flex items-center">
+                          <button className="text-sm text-[#5e17eb] hover:text-[#4b13b8] flex items-center">
                             <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
                             </svg>
                             2.6k
                           </button>
-                          <button className="text-sm text-[#a32e76] hover:text-[#8a2663] flex items-center">
+                          <button className="text-sm text-[#5e17eb] hover:text-[#4b13b8] flex items-center">
                             <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
                             </svg>
@@ -302,7 +289,7 @@ export function VideosPage() {
                               className="w-40 h-24 object-cover rounded"
                             />
                             <div className="flex-1">
-                              <h4 className="text-sm font-medium text-gray-900 line-clamp-2 hover:text-[#a32e76]">
+                              <h4 className="text-sm font-medium text-gray-900 line-clamp-2 hover:text-[#5e17eb]">
                                 {video.title}
                               </h4>
                               <p className="text-xs text-gray-500 mt-1">
@@ -346,7 +333,7 @@ export function VideosPage() {
                             </div>
                           </div>
                           <div className="mt-2">
-                            <h3 className="text-sm font-medium text-gray-900 line-clamp-2 group-hover:text-[#a32e76]">
+                            <h3 className="text-sm font-medium text-gray-900 line-clamp-2 group-hover:text-[#5e17eb]">
                               {video.title}
                             </h3>
                             <p className="text-xs text-gray-500 mt-1">
@@ -366,7 +353,7 @@ export function VideosPage() {
                       <button
                         disabled={currentPage === 1}
                         onClick={() => setCurrentPage((prev) => prev - 1)}
-                        className="p-2 text-[#a32e76] disabled:text-gray-400 hover:text-[#8a2663] disabled:hover:text-gray-400"
+                        className="p-2 text-[#5e17eb] disabled:text-gray-400 hover:text-[#4b13b8] disabled:hover:text-gray-400"
                       >
                         <ChevronLeft size={24} />
                       </button>
@@ -376,7 +363,7 @@ export function VideosPage() {
                       <button
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage((prev) => prev + 1)}
-                        className="p-2 text-[#a32e76] disabled:text-gray-400 hover:text-[#8a2663] disabled:hover:text-gray-400"
+                        className="p-2 text-[#5e17eb] disabled:text-gray-400 hover:text-[#4b13b8] disabled:hover:text-gray-400"
                       >
                         <ChevronRight size={24} />
                       </button>

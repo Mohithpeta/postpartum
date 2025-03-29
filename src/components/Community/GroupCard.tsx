@@ -15,7 +15,7 @@ export function GroupCard({ group, onJoinRequest, isRequested }: GroupCardProps)
   return (
     <div
       className={`flex bg-white rounded-lg shadow-lg p-4 border border-gray-200 relative 
-                  transition-all cursor-pointer ${isSelected ? "border-2 border-[#a32e76]" : ""}`}
+                  transition-all cursor-pointer ${isSelected ? "border-2 border-[#5e17eb]" : ""}`}
       onClick={() => setIsSelected(!isSelected)}
     >
       {/* Group Image */}
@@ -44,8 +44,8 @@ export function GroupCard({ group, onJoinRequest, isRequested }: GroupCardProps)
                 e.stopPropagation(); // Prevent card click effect
                 onJoinRequest(group);
               }}
-              className="flex items-center justify-center px-4 py-1 border-2 border-[#a32e76] 
-                         text-[#a32e76] font-medium rounded-full hover:bg-[#a32e76] 
+              className="flex items-center justify-center px-4 py-1 border-2 border-[#5e17eb] 
+                         text-[#5e17eb] font-medium rounded-full hover:bg-[#5e17eb] 
                          hover:text-white transition-colors text-sm"
             >
               Join Group <FaArrowRight className="ml-2" />

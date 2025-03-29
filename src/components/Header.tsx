@@ -91,14 +91,14 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
                 value={searchValue}
                 onChange={handleSearch}
                 placeholder={placeholder}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#a32e76] focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
               />
               <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
             <button 
               onClick={handleMicClick}
               className={`p-2 border-y border-r border-gray-300 rounded-r-md hover:bg-gray-50 transition-colors ${
-                isRecording ? 'bg-[#a32e76] bg-opacity-10 text-[#a32e76]' : ''
+                isRecording ? 'bg-[#a32e76] bg-opacity-10 text-[#5E17EB]' : ''
               }`}
             >
               <Mic className={`w-5 h-5 ${isRecording ? 'text-[#a32e76] animate-pulse' : 'text-gray-500'}`} />
@@ -112,11 +112,11 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
               <button 
                 onClick={() => setShowNotifications(!showNotifications)}
                 className={`p-2 rounded-full relative transition-transform hover:scale-105 ${
-                  showNotifications ? 'bg-[#a32e76] bg-opacity-10' : 'hover:bg-gray-100'
+                  showNotifications ? 'bg-[##5E17EB] bg-opacity-10' : 'hover:bg-gray-100'
                 }`}
               >
-                <Bell className={`w-5 h-5 ${showNotifications ? 'text-[#a32e76]' : 'text-gray-600'}`} />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-[#a32e76] rounded-full animate-pulse"></span>
+                <Bell className={`w-5 h-5 ${showNotifications ? 'text-[#5E17EB]' : 'text-gray-600'}`} />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-[#5E17EB] rounded-full animate-pulse"></span>
               </button>
 
               {/* Notifications Dropdown */}
@@ -140,7 +140,7 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
               <button 
                 onClick={() => setShowTopicDropdown(!showTopicDropdown)}
                 className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors ${
-                  showTopicDropdown ? 'bg-[#a32e76] text-white' : 'text-gray-700 hover:bg-gray-100'
+                  showTopicDropdown ? 'bg-[#5E17EB] text-white' : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 <span>{selectedTopic}</span>
@@ -160,7 +160,7 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
                       className={`w-full text-left px-4 py-2 text-sm transition-colors ${
                         selectedTopic === topic 
                           ? 'bg-[#a32e76] text-white' 
-                          : 'text-gray-700 hover:bg-[#a32e76] hover:bg-opacity-10'
+                          : 'text-gray-700 hover:bg-[#5E17EB] hover:bg-opacity-10'
                       }`}
                     >
                       {topic}
@@ -175,7 +175,7 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
               <button 
                 onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
                 className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors ${
-                  showLanguageDropdown ? 'bg-[#a32e76] text-white' : 'text-gray-700 hover:bg-gray-100'
+                  showLanguageDropdown ? 'bg-[#5E17EB] text-white' : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 <span>{selectedLanguage}</span>
@@ -194,8 +194,8 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
                       onClick={() => handleLanguageChange(language)}
                       className={`w-full text-left px-4 py-2 text-sm transition-colors ${
                         selectedLanguage === language 
-                          ? 'bg-[#a32e76] text-white' 
-                          : 'text-gray-700 hover:bg-[#a32e76] hover:bg-opacity-10'
+                          ? 'bg-[#5E17EB] text-white' 
+                          : 'text-gray-700 hover:bg-[#5E17EB] hover:bg-opacity-10'
                       }`}
                     >
                       {language}
@@ -208,7 +208,7 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
             {/* Logout Button */}
             <button
   onClick={logout}
-  className="flex items-center gap-2 px-3 py-2 text-sm rounded-md border border-[#a32e76] text-[#a32e76] hover:bg-[#a32e76] hover:text-white transition-all duration-300 shadow-sm"
+  className="flex items-center gap-2 px-3 py-2 text-sm rounded-md border border-[#5E17EB] text-[#5E17EB] hover:bg-[#5E17EB] hover:text-white transition-all duration-300 shadow-sm"
 >
   <LogOut className="w-4 h-4" />
   <span>Logout</span>

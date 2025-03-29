@@ -7,7 +7,7 @@ export function LifeCourseExperts() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
 
-  const categories = ['All', 'Postpartum Hypertension', 'Anal Incontinence', 'Obesity', 'Diabetes Mellitus', 'Dyspareunia'];
+  const categories = ['All', 'Obstetrician/Gynecologists', 'Baby\'s Pediatrician', 'Psychologist', 'Diet&Nutrician', 'Neurologist'];
 
   const experts = useMemo(() => [
     {
@@ -99,7 +99,7 @@ export function LifeCourseExperts() {
                   onClick={() => setActiveFilter(category)}
                   className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-colors ${
                     activeFilter === category
-                      ? 'bg-[#a32e76] text-white'
+                      ? 'bg-[#5E17EB] text-white'
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
@@ -123,7 +123,7 @@ export function LifeCourseExperts() {
                   <div className="p-4">
                     <h3 className="font-medium text-gray-900">{expert.name}</h3>
                     <p className="text-sm text-gray-600">{expert.specialization}</p>
-                    <button className="mt-3 text-[#a32e76] text-sm font-medium hover:text-[#D81B60]">
+                    <button className="mt-3 text-[#5E17EB] text-sm font-medium hover:text-[#5E17EB]">
                       <Link to={`/profile/${expert.id}`}>View Profile</Link>
                     </button>
                   </div>

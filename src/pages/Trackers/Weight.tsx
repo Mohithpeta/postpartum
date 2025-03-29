@@ -150,13 +150,13 @@ export function Weight() {
                     step="0.1"
                     value={formData.weight}
                     onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
-                    className="flex-1 p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    className="flex-1 p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                     placeholder={formData.unit === 'kg' ? '20-300 kg' : '44-660 lbs'}
                   />
                   <select
                     value={formData.unit}
                     onChange={(e) => setFormData({ ...formData, unit: e.target.value as 'kg' | 'lbs' })}
-                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                   >
                     <option value="kg">kg</option>
                     <option value="lbs">lbs</option>
@@ -175,7 +175,7 @@ export function Weight() {
                   type="datetime-local"
                   value={formData.timestamp}
                   onChange={(e) => setFormData({ ...formData, timestamp: e.target.value })}
-                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                 />
                 {errors.timestamp && (
                   <p className="text-red-500 text-sm mt-1">{errors.timestamp}</p>
@@ -184,7 +184,7 @@ export function Weight() {
 
               <button
                 type="submit"
-                className="w-full bg-[#A32E76] text-white py-2 rounded-md hover:bg-[#8E2968] transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-[#5E17EB] text-white py-2 rounded-md hover:bg-[#8E2968] transition-colors flex items-center justify-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 Add Reading
@@ -202,7 +202,7 @@ export function Weight() {
                 <select
                   value={displayUnit}
                   onChange={(e) => setDisplayUnit(e.target.value as 'kg' | 'lbs')}
-                  className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                  className="p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                 >
                   <option value="kg">Kilograms</option>
                   <option value="lbs">Pounds</option>
@@ -217,7 +217,7 @@ export function Weight() {
                     type="date"
                     value={fromDate}
                     onChange={(e) => setFromDate(e.target.value)}
-                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                     placeholder="From Date"
                   />
                 </div>
@@ -229,7 +229,7 @@ export function Weight() {
                     type="date"
                     value={toDate}
                     onChange={(e) => setToDate(e.target.value)}
-                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                     placeholder="To Date"
                   />
                 </div>

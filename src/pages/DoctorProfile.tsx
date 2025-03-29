@@ -47,7 +47,7 @@ export function DoctorProfile() {
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
       <main className="flex-1 overflow-hidden flex flex-col">
-        <Header />
+        <Header onTopicChange={() => {}} />
         <div className="flex-1 p-8 overflow-y-auto">
           <div className="max-w-6xl mx-auto">
             {/* Back Button */}

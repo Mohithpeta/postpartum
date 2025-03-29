@@ -37,13 +37,13 @@ export function JoinRequestModal({ group, onClose, onSubmit }: JoinRequestModalP
           value={note}
           onChange={(e) => setNote(e.target.value)}
           className="mt-2 w-full h-20 border rounded-md p-2 text-sm 
-                   focus:outline-none focus:ring-2 focus:ring-[#a32e76]"
+                   focus:outline-none focus:ring-2 focus:ring-[#5e17eb]"
           placeholder="Write your note here..."
         />
         <button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="mt-4 w-full py-2 bg-[#a32e76] text-white text-sm font-medium 
+          className="mt-4 w-full py-2 bg-[#5e17eb] text-white text-sm font-medium 
                    rounded-md hover:bg-[#8e2968] transition-colors disabled:opacity-50"
         >
           {isLoading ? 'Sending...' : 'Send Now'}

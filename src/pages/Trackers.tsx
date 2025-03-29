@@ -59,7 +59,7 @@ export function Trackers() {
 
   const AddWidget = () => (
     <motion.button variants={itemVariants} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border-2 border-dashed border-gray-200 flex flex-col items-center justify-center h-full" aria-label="Add new health metric">
-      <div className="p-3 rounded-lg bg-[#A32E76]/10 text-[#A32E76] mb-4">
+      <div className="p-3 rounded-lg bg-[#5e17eb]/10 text-[#5e17eb] mb-4">
         <Plus className="w-6 h-6" />
       </div>
       <span className="text-lg font-semibold text-gray-800">Add More</span>

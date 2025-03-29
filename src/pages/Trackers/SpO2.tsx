@@ -139,7 +139,7 @@ export function SpO2() {
                   type="number"
                   value={formData.oxygen}
                   onChange={(e) => setFormData({ ...formData, oxygen: e.target.value })}
-                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                   placeholder="70-100%"
                 />
                 {errors.oxygen && (
@@ -155,7 +155,7 @@ export function SpO2() {
                   type="number"
                   value={formData.pulseRate}
                   onChange={(e) => setFormData({ ...formData, pulseRate: e.target.value })}
-                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                   placeholder="40-220 BPM"
                 />
                 {errors.pulseRate && (
@@ -171,7 +171,7 @@ export function SpO2() {
                   type="datetime-local"
                   value={formData.timestamp}
                   onChange={(e) => setFormData({ ...formData, timestamp: e.target.value })}
-                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                 />
                 {errors.timestamp && (
                   <p className="text-red-500 text-sm mt-1">{errors.timestamp}</p>
@@ -180,7 +180,7 @@ export function SpO2() {
 
               <button
                 type="submit"
-                className="w-full bg-[#A32E76] text-white py-2 rounded-md hover:bg-[#8E2968] transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-[#5E17EB] text-white py-2 rounded-md hover:bg-[#8E2968] transition-colors flex items-center justify-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 Add Reading

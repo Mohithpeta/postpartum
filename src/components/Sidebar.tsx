@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, Users, MessageCircle, User, Video, Activity,Radio, BookOpen } from 'lucide-react';
+import { Home, Users, MessageCircle, User, Video, Activity, Radio, BookOpen } from 'lucide-react';
+import LifeCourseLogo from '../assets/Lifecourse Logo.png';
 
 interface NavLinkProps {
   icon: React.ReactNode;
@@ -17,7 +18,7 @@ function NavLink({ icon, label, to, isActive }: NavLinkProps) {
       onClick={() => navigate(to)}
       className={`w-full flex items-center px-4 py-2 rounded-md transition-colors ${
         isActive
-          ? 'text-[#A32E76] bg-pink-50'
+          ? 'text-[#5E17EB] bg-pink-50'
           : 'text-gray-700 hover:bg-gray-100'
       }`}
     >
@@ -32,61 +33,69 @@ export function Sidebar() {
   const currentPath = location.pathname;
 
   return (
-    <div className="w-64 bg-white h-screen border-r border-gray-200 p-4">
-      <div className="mb-8">
-        <h1 className="text-xl font-semibold text-[#A32E76]">LifeCourse</h1>
-      </div>
-      <nav className="space-y-2">
-        <NavLink
-          icon={<Home className="w-5 h-5" />}
-          label="Home"
-          to="/home"
-          isActive={currentPath === '/home'}
-        />
-        <NavLink
-          icon={<Users className="w-5 h-5" />}
-          label="LifeCourse Experts"
-          to="/experts"
-          isActive={currentPath === '/experts'}
-        />
-        <NavLink
-        icon={<Video className="w-5 h-5" />}
-        label="Videos"
-        to="/videos"
-        isActive={currentPath === '/videos'}
-        />
-      
-        <NavLink
-          icon={<Radio className="w-5 h-5" />}
-          label="Live"
-          to="/live"
-          isActive={currentPath === '/live'}
-        />
-        <NavLink
-          icon={<MessageCircle className="w-5 h-5" />}
-          label="Community"
-          to="/community"
-          isActive={currentPath === '/community'}
-        />
-        <NavLink
-          icon={<Activity className="w-5 h-5" />}
-          label="Trackers"
-          to="/trackers"
-          isActive={currentPath === '/trackers'}
-        />
-        <NavLink
-          icon={<BookOpen className="w-5 h-5" />}
-          label="Courses"
-          to="/courses"
-          isActive={currentPath === '/courses'}
+    <div className="w-64 bg-white h-screen border-r border-gray-200 p-4 flex flex-col justify-between">
+      <div>
+        <div className="mb-8">
+          <img src={LifeCourseLogo} alt="LifeCourse Logo" className="w-32 h-auto" />
+        </div>
+        <nav className="space-y-2">
+          <NavLink
+            icon={<Home className="w-5 h-5" />}
+            label="Home"
+            to="/home"
+            isActive={currentPath === '/home'}
           />
-        <NavLink
-          icon={<User className="w-5 h-5" />}
-          label="Profile"
-          to="/profile"
-          isActive={currentPath === '/profile'}
-        />
-      </nav>
+          <NavLink
+            icon={<Users className="w-5 h-5" />}
+            label="LifeCourse Experts"
+            to="/experts"
+            isActive={currentPath === '/experts'}
+          />
+          <NavLink
+            icon={<Video className="w-5 h-5" />}
+            label="Videos"
+            to="/videos"
+            isActive={currentPath === '/videos'}
+          />
+          <NavLink
+            icon={<Radio className="w-5 h-5" />}
+            label="Live"
+            to="/live"
+            isActive={currentPath === '/live'}
+          />
+          <NavLink
+            icon={<MessageCircle className="w-5 h-5" />}
+            label="Community"
+            to="/community"
+            isActive={currentPath === '/community'}
+          />
+          <NavLink
+            icon={<Activity className="w-5 h-5" />}
+            label="Trackers"
+            to="/trackers"
+            isActive={currentPath === '/trackers'}
+          />
+          <NavLink
+            icon={<BookOpen className="w-5 h-5" />}
+            label="Courses"
+            to="/courses"
+            isActive={currentPath === '/courses'}
+          />
+          <NavLink
+            icon={<User className="w-5 h-5" />}
+            label="Profile"
+            to="/profile"
+            isActive={currentPath === '/profile'}
+          />
+        </nav>
+      </div>
+      <footer className="mt-8 text-center text-sm text-gray-500">
+        <div>
+          <a href="/terms" className="hover:underline">Terms</a> &nbsp;|&nbsp; 
+          <a href="/privacy" className="hover:underline">Privacy Policy</a>
+        </div>
+        <div className="mt-2">LifeCourse@2025</div>
+      </footer>
     </div>
   );
 }

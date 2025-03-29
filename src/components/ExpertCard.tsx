@@ -11,7 +11,7 @@ export function ExpertCard({ name, title, imageUrl }: ExpertCardProps) {
       <div className="p-4">
         <h3 className="font-semibold text-gray-900">{name}</h3>
         <p className="text-sm text-gray-600">{title}</p>
-        <button className="mt-3 text-sm text-[#E91E63] font-medium">
+        <button className="mt-3 text-sm text-[#5E17EB] font-medium">
           View Profile →
         </button>
       </div>

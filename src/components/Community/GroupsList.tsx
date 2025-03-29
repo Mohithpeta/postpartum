@@ -23,7 +23,7 @@ function GroupsList({ groups }: GroupsListProps) {
 
   return (
     <main className="flex-1 p-8 bg-gray-100">
-      <h2 className="text-2xl font-bold mb-8 text-[#a32e76]">Available Groups</h2>
+      <h2 className="text-2xl font-bold mb-8 text-[#5e17eb]">Available Groups</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {groups.map(group => (
@@ -52,7 +52,7 @@ function GroupsList({ groups }: GroupsListProps) {
               </h3>
               <button
                 onClick={() => setShowSuccessPopup(false)}
-                className="mt-6 px-4 py-2 bg-[#a32e76] text-white text-sm rounded-full 
+                className="mt-6 px-4 py-2 bg-[#5e17eb] text-white text-sm rounded-full 
                              hover:bg-[#8e2968] transition-colors"
               >
                 Close

@@ -130,7 +130,7 @@ export function HeartRate() {
                   type="number"
                   value={formData.bpm}
                   onChange={(e) => setFormData({ ...formData, bpm: e.target.value })}
-                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                   placeholder="40-220 BPM"
                 />
                 {errors.bpm && (
@@ -146,7 +146,7 @@ export function HeartRate() {
                   type="datetime-local"
                   value={formData.timestamp}
                   onChange={(e) => setFormData({ ...formData, timestamp: e.target.value })}
-                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                  className="w-full p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                 />
                 {errors.timestamp && (
                   <p className="text-red-500 text-sm mt-1">{errors.timestamp}</p>
@@ -155,7 +155,7 @@ export function HeartRate() {
 
               <button
                 type="submit"
-                className="w-full bg-[#A32E76] text-white py-2 rounded-md hover:bg-[#8E2968] transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-[#5E17EB] text-white py-2 rounded-md hover:bg-[#8E2968] transition-colors flex items-center justify-center gap-2"
               >
                 <Plus className="w-4 h-4" />
                 Add Reading
@@ -178,7 +178,7 @@ export function HeartRate() {
                     type="date"
                     value={dateRange.from}
                     onChange={(e) => setDateRange({ ...dateRange, from: e.target.value })}
-                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                     placeholder="From"
                   />
                 </div>
@@ -190,7 +190,7 @@ export function HeartRate() {
                     type="date"
                     value={dateRange.to}
                     onChange={(e) => setDateRange({ ...dateRange, to: e.target.value })}
-                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#A32E76] focus:border-transparent"
+                    className="p-2 border rounded-md focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent"
                     placeholder="To"
                   />
                 </div>
@@ -223,7 +223,7 @@ export function HeartRate() {
                   <Line
                     type="monotone"
                     dataKey="bpm"
-                    stroke="#A32E76"
+                    stroke="#5E17EB"
                     name="Heart Rate"
                     dot={{ r: 4 }}
                     activeDot={{ r: 8 }}

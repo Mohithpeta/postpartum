@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Sidebar } from '../components/Sidebar';
-import { X, Users} from 'lucide-react';
+import { X, ChevronRight } from 'lucide-react';
 import { Header } from '../components/Header';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -12,11 +12,17 @@ export function Home() {
 
   const categories = [
     'All',
+    'Nutrition',
+    'Lifestyle',
+    'Frequent Dizziness',
+    'High BP',
+    'Chest Pressure',
+    'Back Headache',
+    'Diet Plan',
     'Mental Health',
     'Anxiety Disorders',
     'Obesity',
     'Diabetes Mellitus',
-    'Nutrition',
     'Hypertension',
     'Exercise',
     'Incontinence',
@@ -26,61 +32,79 @@ export function Home() {
     'Pelvic Organ Prolapse',
   ];
 
-  const personalizedContent = useMemo(() => [
-    {
-      title: 'Mental Health',
-      image: 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&q=80&w=400',
-      experts: '15 Experts',
-      category: 'Mental Health',
-    },
-    {
-      title: 'Exercise',
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=400',
-      experts: '23 Experts',
-      category: 'Exercise',
-    },
-    {
-      title: 'Nutrition',
-      image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=400',
-      experts: '72 Experts',
-      category: 'Nutrition',
-    },
-    {
-      title: 'Anxiety Disorders',
-      image: 'https://images.unsplash.com/photo-1527137342181-19aab11a8ee8?auto=format&fit=crop&q=80&w=400',
-      experts: '45 Experts',
-      category: 'Anxiety Disorders',
-    },
-  ], []);
-
   const experts = useMemo(() => [
     {
       id: 1,
-      name: 'Dr. Sarah Johnson',
-      specialization: 'OBGYN',
-      category: 'Mental Health',
+      name: 'Dr. Dharun Kumar',
+      specialization: 'Obstetrician/Gynecologists',
+      category: 'Hypertension',
       image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=400',
     },
     {
       id: 2,
-      name: 'Dr. Michael Chen',
-      specialization: 'Pediatrician',
-      category: 'Obesity',
+      name: 'Dr. Shanthi Vel',
+      specialization: 'Obstetrician/Gynecologists',
+      category: 'Hypertension',
       image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400',
     },
     {
       id: 3,
-      name: 'Dr. Lisa Williams',
-      specialization: 'Family Medicine',
-      category: 'Diabetes Mellitus',
+      name: 'Dr. Anushiya Sharma',
+      specialization: 'Obstetrician/Gynecologists',
+      category: 'Hypertension',
       image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400',
     },
     {
       id: 4,
-      name: 'Dr. James Wilson',
-      specialization: 'Cardiologist',
-      category: 'Anxiety Disorders',
+      name: 'Dr. Santhosh Kumar',
+      specialization: 'Obstetrician/Gynecologists',
+      category: 'Hypertension',
       image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400',
+    },
+  ], []);
+
+  const recentVideos = useMemo(() => [
+    {
+      title: '10 Practical tips for managing postpartum Hy...',
+      expert: 'Dr. Anjali Kumar',
+      time: '2 hours ago',
+      image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=400',
+    },
+    {
+      title: '10 Practical tips for managing postpartum Hy...',
+      expert: 'Dr. Anjali Kumar',
+      time: '2 hours ago',
+      image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400',
+    },
+    {
+      title: '10 Practical tips for managing postpartum Hy...',
+      expert: 'Dr. Anjali Kumar',
+      time: '2 hours ago',
+      image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400',
+    },
+    {
+      title: 'Nutrition and Exercise for postpartum Hypertension: A Comprehensive Guide',
+      expert: 'Dr. Varsha Bhaskar',
+      time: '2 hours ago',
+      image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=400',
+    },
+  ], []);
+
+  const ongoingLive = useMemo(() => ({
+    title: 'LIVE | Postpartum Recovery: What to Expect | Navigating physical and emotional changes after delivery.',
+    expert: 'Ongoing Live by Dr. Revathi Kumar',
+    watching: '542 Watching',
+    image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400',
+  }), []);
+
+  const testimonials = useMemo(() => [
+    {
+      text: 'Navigating postpartum hypertension was overwhelming, but the live sessions were a game-changer. Dr. Priya’s guidance helped me manage my health while focusing on my baby.',
+      author: 'Ankita R, 28 yrs',
+    },
+    {
+      text: 'After delivery, managing postpartum hypertension felt daunting. Dr. Aruna’s live sessions gave me practical tips and confidence to prioritize my health while caring for my baby.',
+      author: 'Ritika P, 26 yrs',
     },
   ], []);
 
@@ -107,26 +131,6 @@ export function Home() {
     setTimeout(() => setIsLoading(false), 500);
   };
 
-  const filteredContent = useMemo(() => {
-    let filtered = personalizedContent;
-
-    if (activeFilters.length > 0) {
-      filtered = filtered.filter((item) =>
-        activeFilters.includes('All') || activeFilters.includes(item.category)
-      );
-    }
-
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim();
-      filtered = filtered.filter((item) =>
-        item.title.toLowerCase().includes(query) ||
-        item.category.toLowerCase().includes(query)
-      );
-    }
-
-    return filtered;
-  }, [personalizedContent, activeFilters, searchQuery]);
-
   const filteredExperts = useMemo(() => {
     let filtered = experts;
 
@@ -148,14 +152,14 @@ export function Home() {
     return filtered;
   }, [experts, activeFilters, searchQuery]);
 
-  const totalResults = filteredContent.length + filteredExperts.length;
+  const totalResults = filteredExperts.length;
 
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
       <main className="flex-1 overflow-hidden flex flex-col">
         <Header placeholder="Search LifeCourse" onSearch={handleSearch} onTopicChange={() => {}} />
-        
+
         {/* Categories Bar */}
         <div className="sticky top-0 z-10 bg-white border-b border-gray-200">
           <div className="max-w-[1800px] mx-auto px-4">
@@ -167,7 +171,7 @@ export function Home() {
                   className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
                     (category === 'All' && activeFilters.length === 0) ||
                     activeFilters.includes(category)
-                      ? 'bg-[#a32e76] text-white shadow-md'
+                      ? 'bg-[#5E17EB] text-white shadow-md'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -210,81 +214,111 @@ export function Home() {
               </motion.div>
             )}
 
-            {/* Personalized Content */}
-            {filteredContent.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-xl font-semibold mb-6">Personalized for you</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {filteredContent.map((content, index) => (
-                    <div key={index} className="group cursor-pointer">
-                      <div className="relative aspect-video rounded-xl overflow-hidden mb-3">
-                        <img
-                          src={content.image}
-                          alt={content.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all" />
-                      </div>
-
-                      <div className="flex space-x-3">
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-base font-medium text-gray-900 line-clamp-2 mb-1 group-hover:text-[#a32e76]">
-                            {content.title}
-                          </h3>
-                          <div className="flex items-center text-sm text-gray-600 mb-1">
-                            <Users className="w-4 h-4 mr-1" />
-                            <span>{content.experts}</span>
-                          </div>
-                          <div className="mt-2 flex items-center space-x-4 text-xs text-gray-600">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Experts Section */}
             {filteredExperts.length > 0 && (
               <div className="mb-8">
-                <h2 className="text-xl font-semibold mb-6">LifeCourse experts for you</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {filteredExperts.map((expert) => (
-                    <Link key={expert.id} to={`/profile/${expert.id}`} className="block">
-                      <div className="group cursor-pointer">
-                        <div className="relative aspect-video rounded-xl overflow-hidden mb-3">
-                          <img
-                            src={expert.image}
-                            alt={expert.name}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                          />
-                          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all" />
-                        </div>
-
-                        <div className="flex space-x-3">
-                          <div className="flex-shrink-0">
-                            <img
-                              src={expert.image}
-                              alt={expert.name}
-                              className="w-10 h-10 rounded-full"
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center">
-                              <h3 className="text-base font-medium text-gray-900 truncate group-hover:text-[#a32e76]">
-                                {expert.name}
-                              </h3>
-                            </div>
-                            <p className="text-sm text-gray-600">{expert.specialization}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+              <h2 className="text-2xl font-bold mb-6 ">LifeCourse Experts for you</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {filteredExperts.map((expert) => (
+                <Link key={expert.id} to={`/profile/${expert.id}`} className="block group">
+                  <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <div className="relative aspect-video">
+                    <img
+                    src={expert.image}
+                    alt={expert.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all" />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#5E17EB] truncate">
+                    {expert.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-2">{expert.specialization}</p>
+                    <button className="text-sm font-medium text-[#5E17EB] hover:text-[#7a33d1] flex items-center">
+                    View Profile
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                    </button>
+                  </div>
+                  </div>
+                </Link>
+                ))}
+              </div>
+              <div className="mt-6 text-center">
+                <Link
+                to="/experts"
+                className="text-lg font-medium text-[#5E17EB] hover:text-[#7a33d1] flex items-center justify-center"
+                >
+                View All LifeCourse Experts
+                <ChevronRight className="w-5 h-5 ml-1" />
+                </Link>
+              </div>
               </div>
             )}
+
+            {/* Recent Videos Section */}
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold mb-6">Recent Videos</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {recentVideos.map((video, index) => (
+                <div key={index} className="group cursor-pointer">
+                <div className="relative aspect-video rounded-xl overflow-hidden mb-3">
+                  <img
+                  src={video.image}
+                  alt={video.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all" />
+                </div>
+                <div className="flex flex-col">
+                  <h3 className="text-base font-medium text-gray-900 line-clamp-2 mb-1 group-hover:text-[#5E17EB]">
+                  {video.title}
+                  </h3>
+                  <p className="text-sm text-gray-600">{video.expert}</p>
+                  <p className="text-sm text-gray-600">{video.time}</p>
+                </div>
+                </div>
+              ))}
+              </div>
+            </div>
+
+            {/* Ongoing Live Section */}
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold mb-6">Ongoing Live</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="relative aspect-video rounded-xl overflow-hidden" style={{ height: '250px' }}>
+                  <img
+                    src={ongoingLive.image}
+                    alt={ongoingLive.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex flex-col justify-center">
+                  <h3 className="text-base font-medium text-gray-900 mb-2">{ongoingLive.title}</h3>
+                  <p className="text-sm text-gray-600 mb-2">{ongoingLive.expert}</p>
+                  <p className="text-sm text-gray-600 mb-4">{ongoingLive.watching} Watching</p>
+                  <button className="bg-white text-[#5E17EB] font-medium py-2 px-4 rounded-full border border-[#5E17EB] hover:bg-gray-100 transition-colors w-fit">
+                    Join Now
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonials Section */}
+            <div>
+              <h2 className="text-xl font-semibold mb-6 ">Testimonials Curated For You</h2>
+              <div className="flex overflow-x-auto space-x-4 scrollbar-hide justify-start" style={{ height: '200px' }}>
+                {testimonials.map((testimonial, index) => (
+                  <div key={index} className="bg-white rounded-xl shadow-md p-4 w-80 flex-shrink-0">
+                    <p className="text-sm text-gray-700 italic mb-2">"{testimonial.text}"</p>
+                    <p className="text-xs text-gray-500">- {testimonial.author}</p>
+                  </div>
+                ))}
+                <div className="flex items-center">
+                  <ChevronRight className="w-6 h-6 text-gray-500 hover:text-[#5E17EB] cursor-pointer" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </main>

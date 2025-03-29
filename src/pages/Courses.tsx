@@ -107,11 +107,11 @@ const CoursesPage = () => {
 
               <div className="text-xs text-gray-500 mb-4">
                 By continuing you verify that you are agreeing to the terms & conditions LifeCourse.
-                <span className="text-[#a32e76] cursor-pointer ml-1">Learn more...</span>
+                <span className="text-[#5E17EB] cursor-pointer ml-1">Learn more...</span>
               </div>
 
               <button
-                className="w-full bg-[#a32e76] text-white py-3 rounded-lg hover:bg-[#922667]"
+                className="w-full bg-[#5E17EB] text-white py-3 rounded-lg hover:bg-[#922667]"
               >
                 Pay Now →
               </button>
@@ -145,18 +145,18 @@ const CoursesPage = () => {
           </button>
 
           <div className="p-6">
-            <h2 className="text-[#a32e76] text-xl font-medium mb-6">
+            <h2 className="text-[#5E17EB] text-xl font-medium mb-6">
               Perks of Upgrading to Premium
             </h2>
 
             <div className="space-y-4 mb-6">
-              <div className="flex items-center gap-3 text-[#a32e76] font-medium">
+              <div className="flex items-center gap-3 text-[#5E17EB] font-medium">
                 <ShieldCheckIcon size={18} className="flex-shrink-0" />
                 <p>Upgrade to Premium for ₹ 2000</p>
               </div>
               {perks.map((perk, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <ShieldCheckIcon size={18} className="text-[#a32e76] mt-0.5 flex-shrink-0" />
+                  <ShieldCheckIcon size={18} className="text-[#5E17EB] mt-0.5 flex-shrink-0" />
                   <p className="text-gray-700 text-sm">{perk}</p>
                 </div>
               ))}
@@ -165,12 +165,12 @@ const CoursesPage = () => {
             <p className="text-xs text-gray-500 mb-6">
               By buying this course, you verify that you are neither who delivered recently or caregivers
               agree to these terms. Refunds are only available in limited circumstances according to our
-              refund policy. <span className="text-[#a32e76] cursor-pointer">Learn more...</span>
+              refund policy. <span className="text-[#5E17EB] cursor-pointer">Learn more...</span>
             </p>
 
             <button
               onClick={() => setShowQRCode(true)}
-              className="w-full bg-[#a32e76] text-white py-3 rounded-lg hover:bg-[#922667] flex items-center justify-center gap-2"
+              className="w-full bg-[#5E17EB] text-white py-3 rounded-lg hover:bg-[#922667] flex items-center justify-center gap-2"
             >
               Next <span className="text-lg" >→</span>
             </button>
@@ -196,14 +196,14 @@ const CoursesPage = () => {
                 <img src="/api/placeholder/800/450" alt="Course Video" className="w-full h-full object-cover" style={{width: "657" , height:"372"}}/>
                 {isPremiumContent ? (
                   <div className="absolute bottom-4 left-4 bg-black bg-opacity-70 p-4 rounded-lg text-white flex items-center">
-                  <Lock className="w-8 h-8 mr-4 text-[#a32e76]" />
+                  <Lock className="w-8 h-8 mr-4 text-[#5E17EB]" />
                   <div>
                     <div className="text-lg mb-2">Unlock premium to access course & perks</div>
-                    <div className="text-[#a32e76] font-semibold">₹ {courseData.price}</div>
+                    <div className="text-[#5E17EB] font-semibold">₹ {courseData.price}</div>
                   </div>
                     <button 
                     onClick={() => setShowPaymentFlow(true)}
-                    className="bg-[#a32e76] text-white px-6 py-2 rounded-full hover:bg-[#922667] ml-4"
+                    className="bg-[#5E17EB] text-white px-6 py-2 rounded-full hover:bg-[#922667] ml-4"
                     >
                     Unlock Premium
                     </button>
@@ -225,9 +225,9 @@ const CoursesPage = () => {
               </div>
 
               <div className="flex items-center gap-3 mb-6">
-                <span className="text-[#a32e76]">{courseData.instructor.name}</span>
-                {courseData.instructor.verified && <Verified className="w-4 h-4 text-[#a32e76]" />}
-                <span className={isPremiumContent ? 'text-[#a32e76]' : 'text-green-500'}>
+                <span className="text-[#5E17EB]">{courseData.instructor.name}</span>
+                {courseData.instructor.verified && <Verified className="w-4 h-4 text-[#5E17EB]" />}
+                <span className={isPremiumContent ? 'text-[#5E17EB]' : 'text-green-500'}>
                   {isPremiumContent ? 'Pay to Watch' : 'Free to watch'}
                 </span>
                 <span className="text-sm text-gray-600">{courseData.stats.views} Views</span>
@@ -243,15 +243,15 @@ const CoursesPage = () => {
                   <div key={index} className="flex-shrink-0 w-1/4 max-w-xs h-72 bg-white rounded-lg shadow-md p-4 flex flex-col items-center">
                   <img src="/api/placeholder/194/194" alt={instructor.name} className="w-24 h-24 rounded-full object-cover mb-4" />
                   <div className="text-center mb-4">
-                  <div className="text-sm font-bold text-[#a32e76]">{instructor.name}</div>
+                  <div className="text-sm font-bold text-[#5E17EB]">{instructor.name}</div>
                   <div className="text-xs text-gray-600">{instructor.title}</div>
-                  <span className="text-xs px-2 py-1 bg-[#a32e76] bg-opacity-10 text-[#a32e76] rounded-lg inline-block mt-2">
+                  <span className="text-xs px-2 py-1 bg-[#5E17EB] bg-opacity-10 text-[#5E17EB] rounded-lg inline-block mt-2">
                   {instructor.type}
                   </span>
                   </div>
                   <div className="flex gap-2 mt-auto">
                   <button className="text-xs px-4 py-2 bg-gray-200 rounded-lg">View Profile</button>
-                  <button className="text-xs px-4 py-2 bg-[#a32e76] text-white rounded-lg">Message</button>
+                  <button className="text-xs px-4 py-2 bg-[#5E17EB] text-white rounded-lg">Message</button>
                   </div>
                   </div>
                 ))}
@@ -261,7 +261,7 @@ const CoursesPage = () => {
                 <p className="text-gray-700 text-sm">
                   Discover actionable advice from doctors to manage postpartum hypertension effectively. 
                   This video covers tips on maintaining a heart-healthy diet...
-                  <button className="text-[#a32e76] ml-1">Read more...</button>
+                  <button className="text-[#5E17EB] ml-1">Read more...</button>
                 </p>
               </div>
             </div>
@@ -279,7 +279,7 @@ const CoursesPage = () => {
                       <img src={lesson.thumbnail} alt={lesson.title} className="w-20 h-12 rounded object-cover" />
                       <div className="ml-3 flex-1 min-w-0">
                         <p className="text-sm font-medium text-gray-900 line-clamp-2">{lesson.title}</p>
-                        <span className={`text-xs mt-1 ${lesson.status === 'Free to watch' ? 'text-green-500' : 'text-[#a32e76]'}`}>{lesson.status}</span>
+                        <span className={`text-xs mt-1 ${lesson.status === 'Free to watch' ? 'text-green-500' : 'text-[#5E17EB]'}`}>{lesson.status}</span>
                       </div>
                     </div>
                   ))}

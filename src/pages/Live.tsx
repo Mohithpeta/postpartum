@@ -92,7 +92,7 @@ export function Live() {
       onClick={() => setActiveTab(category)}
       className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
         activeTab === category
-          ? 'bg-[#a32e76] text-white'
+          ? 'bg-[#5e17eb] text-white'
           : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
       }`}
     >
@@ -135,9 +135,9 @@ export function Live() {
           <button 
             className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
               session.status === 'live'
-                ? 'bg-[#a32e76] text-white'
+                ? 'bg-[#5e17eb] text-white'
                 : session.status === 'upcoming'
-                ? 'border border-[#a32e76] text-[#a32e76]'
+                ? 'border border-[#5e17eb] text-[#5e17eb]'
                 : 'bg-gray-200 text-gray-700'
             }`}
           >
@@ -168,7 +168,7 @@ export function Live() {
           ))}
         </div>
         {title === 'Recent Live' && filteredSessions.length > 0 && (
-          <button className="mt-6 text-[#a32e76] text-sm font-semibold block mx-auto">
+          <button className="mt-6 text-[#5e17eb] text-sm font-semibold block mx-auto">
             Show more recent live ▼
           </button>
         )}
