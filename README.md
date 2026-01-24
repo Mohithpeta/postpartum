@@ -61,7 +61,7 @@ This architecture enables:
 Independent frontend/backend development
 Easier testing and debugging
 Clear ownership boundaries 
-<img width="1000" height="2205" alt="postpartumfe" src="https://github.com/user-attachments/assets/3cd199d7-7f5a-4e11-9d2f-02bf01c90092" />
+<img width="300" height="600" alt="postpartumfe" src="https://github.com/user-attachments/assets/3cd199d7-7f5a-4e11-9d2f-02bf01c90092" />
 
 Contact
 For questions or feedback, please contact Mohith Peta at mohitreddy2031@gmail.com.
