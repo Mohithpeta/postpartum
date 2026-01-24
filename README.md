@@ -51,6 +51,17 @@ Edit
   /utils       - Utility functions
 Contribution
 This project was developed as part of an internship at DeepVital Pvt. Ltd., aimed at improving maternal health through digital education.
+Architecture Overview
+The Mother’s Dashboard frontend follows a layered React architecture focused on separation of concerns, maintainability, and scalability.
+Presentation Layer: React pages and reusable components handle UI rendering and user interaction.
+Routing & State: Client-side routing manages navigation between pages, while component-level state handles UI and session data.
+Service Layer: A centralized API layer abstracts all backend communication, including authentication and data fetching.
+Backend Integration: The frontend communicates with a separate backend service via secure REST APIs using JWT-based authentication.
+This architecture enables:
+Independent frontend/backend development
+Easier testing and debugging
+Clear ownership boundaries 
+<img width="1000" height="2205" alt="postpartumfe" src="https://github.com/user-attachments/assets/3cd199d7-7f5a-4e11-9d2f-02bf01c90092" />
 
 Contact
 For questions or feedback, please contact Mohith Peta at mohitreddy2031@gmail.com.
